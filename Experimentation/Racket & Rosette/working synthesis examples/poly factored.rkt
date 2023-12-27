@@ -4,16 +4,19 @@
 
 ;;Original function: polynomial
 (define (poly x)
-   (+ (* x x x x) (* 6 x x x) (* 11 x x) (* 6 x)))
+   (+ (* 1 x x x) (* -1 x x) (* -2 x))
+)
 
 ;; Target: factored polynomial
 (define (factored x)
-  (* (+ x 1) (+ x (??)) (+ x (??)) (+ x (??))))
+  (* (+ x 1) (- x (??)) x)
+)
 
 ;; Expressing the synthesis probLem
 ;; We want forall x integer, (poly x) = (factored x)
-(define (same p f x)
-  (assert (= (p x) (f x))))
+(define (same p f x)  
+  (assert (= (p x) (f x)))
+)
 
 ;; Synthesis problem
 (displayln "starting ...")
@@ -23,4 +26,12 @@
    #:forall (list x) ;; forall x ...
    #:guarantee (same poly factored x)))
 
-(if (sat? solution) (print-forms solution) (print "UNSAT")) 
+(if (sat? solution)
+    (begin
+      (print solution)
+      (display "\n")
+      (display "\n")
+      (print-forms solution)
+    )
+    (print "UNSAT")
+ )

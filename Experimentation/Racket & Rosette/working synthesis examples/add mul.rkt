@@ -2,8 +2,7 @@
 
 (require rosette/lib/synthax) ;; Import library for defining holes in sketches
 
-(define
-  (add first second)
+(define (add first second)
   (+ first second)
 )
 
@@ -12,22 +11,7 @@
   (* first second)
 )
 
-(define
-  (same)
-  (define val (??))
-  (assert
-   (>= val 2)
-  )
-  (assert
-   (=
-    (add val val)
-    (mul val val)
-   )
-  )
-)
-
-(define
-  (same_manual x)
+(define (same x)
   (assert
    (=
     (add x x)
@@ -36,11 +20,15 @@
   )
 )
 
-(define-symbolic x integer?)
+(define-symbolic x y integer?)
 (define solution
   (synthesize
    #:forall (list x)
-   #:guarantee (same)
+   #:guarantee
+   (begin
+     (assume (> y 0)) ;; unsat if (> y 2), as only 0 and 2 can be solutions (obviously)
+     (same y)
+   )
   )
 )
 
