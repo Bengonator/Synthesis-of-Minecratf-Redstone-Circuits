@@ -12,7 +12,7 @@
 )
 
 ; --- Synthesis skeleton ---
-(define-symbolic x c integer?)
+(define-symbolic x integer?)
 (define solution
   (synthesize
    #:forall (list x)
@@ -28,7 +28,7 @@
       (print solution)
       (display "\n")
       (display "\n")
-      (print-forms solution)
+      (generate-forms solution)
     )
     (display "UNSAT")
 )

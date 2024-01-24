@@ -19,7 +19,6 @@
 )
 
 ;; Synthesis problem
-(displayln "starting ...")
 (define-symbolic x integer?) ;; Define symbolic x, represents any integer
 (define solution
   (synthesize
@@ -31,7 +30,7 @@
       (print solution)
       (display "\n")
       (display "\n")
-      (print-forms solution)
+      (generate-forms solution)
     )
     (print "UNSAT")
  )

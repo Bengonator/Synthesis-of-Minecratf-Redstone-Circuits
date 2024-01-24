@@ -42,17 +42,30 @@
 ;)
 
 
+(define (adding num)
+  (for ([i (in-range 6)])
+    (display i)
+    (if (odd? i)
+        (display " odd")
+        (display " even")
+    )
+    (display "\n")
+  )
+)
 
 ; --- Synthesis skeleton ---
-(define-symbolic x c integer?)
+(define-symbolic b1 boolean?)
+(define-symbolic* b2 boolean?)
 (define solution
   (synthesize
-   #:forall (list x)
+   #:forall (list b1)
    #:guarantee
     (begin
-       (assume (even? x) )
-       (assume (< 3 c) )
-       (assert (odd? (+ x c) ) )
+       (assert (and
+                 (or b1 b2)
+                 (or (not b1) b2)
+               )
+       )
     )
   )
 )
@@ -62,7 +75,7 @@
       (display solution)
       (display "\n")
       (display "\n")
-      (print-forms solution)
+      (generate-forms solution)
     )
     (display "UNSAT")
 )

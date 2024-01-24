@@ -37,7 +37,7 @@
       (display solution)
       (display "\n")
       (display "\n")
-      (print-forms solution)
+      (generate-forms solution)
     )
     (display "UNSAT")
 )
