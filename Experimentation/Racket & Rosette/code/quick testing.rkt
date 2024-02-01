@@ -53,7 +53,7 @@
   )
 )
 
-; --- Synthesis skeleton ---
+; --- Synthesis skeleton start ---
 (define-symbolic b1 boolean?)
 (define-symbolic* b2 boolean?)
 (define solution
@@ -72,10 +72,13 @@
 
 (if (sat? solution)
     (begin
+      (display "Display Solution:\n")
       (display solution)
       (display "\n")
       (display "\n")
+      (display "Generate Forms:\n")
       (generate-forms solution)
     )
-    (display "UNSAT")
+    (display "UNSAT\n")
 )
+; --- Synthesis skeleton end ---
