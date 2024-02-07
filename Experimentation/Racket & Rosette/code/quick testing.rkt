@@ -41,7 +41,6 @@
 ;  )
 ;)
 
-
 (define (adding num)
   (for ([i (in-range 6)])
     (display i)
@@ -54,18 +53,15 @@
 )
 
 ; --- Synthesis skeleton start ---
-(define-symbolic b1 boolean?)
-(define-symbolic* b2 boolean?)
+(define-symbolic x integer?)
 (define solution
   (synthesize
-   #:forall (list b1)
+   #:forall (list x)
    #:guarantee
     (begin
-       (assert (and
-                 (or b1 b2)
-                 (or (not b1) b2)
-               )
-       )
+      (define multi (??))
+      (assert (even? (* multi x)))
+      (assert (> multi 0))
     )
   )
 )
