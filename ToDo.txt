@@ -1,0 +1,44 @@
+tmp todos:
+Max Fragen:
+-warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
+
+- im problem ordner san beispiele
+
+-warum bei solve (zb bsp oben) keine genauen Werte vom choose erfahren?
+man sieht zwar, dass des 0te und 1te true is, oiso kann ma beim choose nachschauen, aber wieso ned glei die info? bei synthesize is ja da.
+passt da iwi dazu: display solution geht, generate-forms solution jedoch ned
+(es steht jedoch auch Given a satisfiable solution? to a synthesize query)
+
+-bei choose* mit synthesize gibts gleiche solution wie mit solve, aba er macht ka generate form. da die solutions ja oft zu kurz san, wie findet ma lösung?
+
+-bei choose* fehlt gefühlt eines:
+(define (choose_num)
+  (choose* 0 1 2 3 4 5)
+)
+(define first (choose_num))
+(define second (choose_num))
+(assert
+ (and
+  (equal? 3 first)
+  (equal? 2 second)
+ )
+)
+
+(model
+ [xi?$0 #f]
+ [xi?$1 #f]
+ [xi?$2 #f]
+ [xi?$3 #t] 3 richtig passt
+ [xi?$4 #f] 4
+ [xi?$5 #f] 5 und aus
+ [xi?$6 #f] 0
+ [xi?$7 #t] 1...müsste aba 2 sein
+ [xi?$8 #f]
+ [xi?$9 #f]
+)
+
+----------------------
+
+Rosette:
+	Dynamically change "choose blocks":
+	(choose 0 1 2 3 4 5) --> something like (choose (range 0 len_blocks))
