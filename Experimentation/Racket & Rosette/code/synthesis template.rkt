@@ -1,10 +1,11 @@
 #lang rosette
 
 (require rosette/lib/synthax) ;; Import library for defining holes in sketches
+(output-smt (current-output-port)) ;; Print SMT output to console
+
 
 
 ; --- Synthesis skeleton start ---
-(output-smt (current-output-port))
 (define-symbolic i1 integer?)
 (define-symbolic* i2 integer?)
 (define solution
@@ -16,6 +17,7 @@
     )
   )
 )
+(display "\n")
 
 (if (sat? solution)
     (begin
