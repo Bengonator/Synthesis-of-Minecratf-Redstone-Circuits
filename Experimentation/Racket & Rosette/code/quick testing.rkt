@@ -2,7 +2,6 @@
 
 (require rosette/lib/synthax) ;; Import library for defining holes in sketches
 
-
 ;(define test (block 1 2 5))
 ;(block-x test)
 ;(define newer (struct-copy block test [x 4]))
@@ -52,29 +51,29 @@
   )
 )
 
-; --- Synthesis skeleton start ---
-(define-symbolic x integer?)
-(define solution
-  (synthesize
-   #:forall (list x)
-   #:guarantee
-    (begin
-      (define multi (??))
-      (assert (even? (* multi x)))
-      (assert (> multi 0))
-    )
-  )
-)
-
-(if (sat? solution)
-    (begin
-      (display "Display Solution:\n")
-      (display solution)
-      (display "\n")
-      (display "\n")
-      (display "Generate Forms:\n")
-      (generate-forms solution)
-    )
-    (display "UNSAT\n")
-)
-; --- Synthesis skeleton end ---
+;; ; --- Synthesis skeleton start ---
+;; (define-symbolic x integer?)
+;; (define solution
+;;   (synthesize
+;;    #:forall (list x)
+;;    #:guarantee
+;;     (begin
+;;       (define multi (??))
+;;       (assert (even? (* multi x)))
+;;       (assert (> multi 0))
+;;     )
+;;   )
+;; )
+;; 
+;; (if (sat? solution)
+;;     (begin
+;;       (display "Display Solution:\n")
+;;       (display solution)
+;;       (display "\n")
+;;       (display "\n")
+;;       (display "Generate Forms:\n")
+;;       (generate-forms solution)
+;;     )
+;;     (display "UNSAT\n")
+;; )
+;; ; --- Synthesis skeleton end ---
