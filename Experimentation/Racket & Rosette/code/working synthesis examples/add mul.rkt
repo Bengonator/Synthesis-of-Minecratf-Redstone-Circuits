@@ -11,11 +11,11 @@
   (* first second)
 )
 
-(define (same x)
+(define (same var sym)
   (assert
    (=
-    (add x x)
-    (mul x x)
+    (* sym (add var var))
+    (* sym (mul var var))
    )
   )
 )
@@ -27,7 +27,7 @@
    #:guarantee
    (begin
      (assume (> y 0)) ;; unsat if (> y 2), as only 0 and 2 can be solutions (obviously)
-     (same y)
+     (same y x)
    )
   )
 )

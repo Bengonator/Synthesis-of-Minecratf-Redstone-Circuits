@@ -60,8 +60,8 @@
   )
 )
 
-(define size 30)
-(define source 13)
+(define size 25)
+(define source 17)
 
 (define world (build-list size (lambda (x) 0)))
 (display "Start:\n")
@@ -73,29 +73,4 @@
 
 (display "\nEnd:\n")
 (display world)
-(display "\n")
-
-;; ; --- Synthesis skeleton start ---
-;; (define-symbolic x integer?)
-;; (define solution
-;;   (synthesize
-;;    #:forall (list x)
-;;    #:guarantee
-;;     (begin
-;;
-;;     )
-;;   )
-;; )
-;; 
-;; (if (sat? solution)
-;;     (begin
-;;       (display "Display Solution:\n")
-;;       (display solution)
-;;       (display "\n")
-;;       (display "\n")
-;;       (display "Generate Forms:\n")
-;;       (generate-forms solution)
-;;     )
-;;     (display "UNSAT\n")
-;; )
-;; ; --- Synthesis skeleton end ---
+(display "\n\n")
