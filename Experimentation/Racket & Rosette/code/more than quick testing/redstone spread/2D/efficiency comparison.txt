@@ -1,0 +1,12 @@
+n: size of square, so 4 would mean 4 times 4
+s (start): 0 --> (0 0); m (middle) --> (n/2 n/2)
+
+with print output for every cell
+n  | s | BFS | DFS 
+-------------------
+ 7 | 0 | <1s | 130s
+ 7 | m | <1s |  50s
+17 | 0 | 15s | did not try
+17 | m | 33s | did not try
+
+without prints both can handle way more

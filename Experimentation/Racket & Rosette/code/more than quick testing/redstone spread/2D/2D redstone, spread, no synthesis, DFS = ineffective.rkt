@@ -2,50 +2,77 @@
 
 (require rosette/lib/synthax) ;; Import library for defining holes in sketches
 
-(define (update_nb in neighbours)
-  (display "in: ")
-  (display in)
-  (display "\n")
-  ;; print world in a way, that zeros are invisible 
-  ;; and digits have a trailing space
-  (display "-")
-  (for ([i nCols])
-      (display "-----")
-  )
-  (display "\n")
-  
-  (for ([row_idx (range nRows)])
-    (display "| ")
-    
-    (for ([col world])
-      (define num (list-ref col row_idx))
-      (when (< num 10)
-        (display " ")
-      )
-      ;;(if (eq? num 0)
-      ;;    (display " ")
-          (display num)
-      ;;)
-      (display " | ")
-    )
-    (display "\n")
-
-    (display "-")
-    (for ([i nCols])
-      (display "-----")
-    )
-    (display "\n")
-  )
-  (display "\n")
-
-  ;; actual redstone spread
+(define (get_neighbours cell)
   (if (and
-       (integer? in)
-       (list? neighbours)
-       (not (null? neighbours))
+       (list? cell)
+       (not (null? cell))
       )
       (begin
-        (for ([nb neighbours])
+        (define col (list-ref cell 0))
+        (define row (list-ref cell 1))
+
+        (list
+         (list col (- row 1))
+         (list (+ col 1) row)
+         (list col (+ row 1))
+         (list (- col 1) row)
+        )
+      )
+
+      ;; else
+      (display "wrong input\n")
+  )
+)
+
+(define (update_nb cell)
+  
+  ;; print world in a way, that zeros are invisible 
+  ;; and digits have a trailing space
+;;   (begin
+;;   (display "-")
+;;   (for ([i nCols])
+;;       (display "-----")
+;;   )
+;;   (display "\n")
+;;   
+;;   (for ([row_idx (range nRows)])
+;;     (display "| ")
+;;     
+;;     (for ([col world])
+;;       (define num (list-ref col row_idx))
+;;       (when (< num 10)
+;;         (display " ")
+;;       )
+;;       ;;(if (eq? num 0)
+;;       ;;    (display " ")
+;;           (display num)
+;;       ;;)
+;;       (display " | ")
+;;     )
+;;     (display "\n")
+;; 
+;;     (display "-")
+;;     (for ([i nCols])
+;;       (display "-----")
+;;     )
+;;     (display "\n")
+;;   )
+;;   (display "\n")
+;;   )
+
+  ;; actual redstone spread
+  (define src_col_idx (list-ref cell 0))
+  (define src_row_idx (list-ref cell 1))
+  (define str (list-ref (list-ref world src_col_idx) src_row_idx))
+  (define nbs (get_neighbours cell))
+  
+  (if (and
+       (integer? str)
+       (list? nbs)
+       (not (null? nbs))
+      )
+      (begin
+        (for ([nb nbs])
           (define nb_col_idx (list-ref nb 0))
           (define nb_row_idx (list-ref nb 1))
           
@@ -61,7 +88,7 @@
                         (list-ref world nb_col_idx)
                         nb_row_idx
                        )
-                       in
+                       str
                       )
                   (set! world
                         (list-set world
@@ -69,31 +96,24 @@
                                   (list-set
                                    (list-ref world nb_col_idx)
                                    nb_row_idx
-                                   (- in 1)
+                                   (- str 1)
                                   )
                         )
                   )
                   
                   ;; call recursively to progress redstone spread
-                  (when (> in 0)
-                    (update_nb
-                     (- in 1)
-                     (list
-                      (list nb_col_idx (- nb_row_idx 1))
-                      (list (+ nb_col_idx 1) nb_row_idx)
-                      (list nb_col_idx (+ nb_row_idx 1))
-                      (list (- nb_col_idx 1) nb_row_idx)
-                     )
-                    )
+                  (when (> str 1)
+                    (update_nb nb)
                   )
                 )
               )
               
               ;; else
               (begin
-                (display "do nothing, out of bounds for: ")
-                (display nb)
-                (display "\n")
+                (+ 1 2)
+;;                 (display "do nothing, out of bounds for: ")
+;;                 (display nb)
+;;                 (display "\n")
               )
           )        
         )
@@ -104,8 +124,8 @@
   )
 )
 
-(define size (list 5 5))
-(define src (list 1 3))
+(define size (list 70 70))
+(define src (list 0 0))
 
 (define nCols (list-ref size 0))
 (define nRows (list-ref size 1))
@@ -137,15 +157,7 @@
       )
 )
 
-(update_nb
- (list-ref (list-ref world src_col_idx) src_row_idx)
- (list
-  (list src_col_idx (- src_row_idx 1))
-  (list (+ src_col_idx 1) src_row_idx)
-  (list src_col_idx (+ src_row_idx 1))
-  (list (- src_col_idx 1) src_row_idx)
- )
-)
+(update_nb src)
 
 (display "\nEnd:\n")
 (display world)
