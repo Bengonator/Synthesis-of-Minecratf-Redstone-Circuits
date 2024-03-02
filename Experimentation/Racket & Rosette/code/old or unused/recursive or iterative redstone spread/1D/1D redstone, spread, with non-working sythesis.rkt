@@ -41,7 +41,7 @@
                   )
                   
                   ;; call recursively to progress redstone spread
-                  ;;(update_nb (- in 1) (list (- nb 1) (+ nb 1)))
+                  (update_nb (- in 1) (list (- nb 1) (+ nb 1)))
                 )
               )
               
@@ -79,8 +79,7 @@
       (update_nb (list-ref world source) (list (- source 1) (+ source 1)))
 
       (assert (> source 0))
-      (assert (eq? (list-ref world 2) 14))
-      
+      (assert (eq? (list-ref world 2) 10))
     )
   )
 )

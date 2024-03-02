@@ -51,6 +51,11 @@
   )
 )
 
+(define-symbolic x integer?)
+(assume (> x 1))
+(solve (assert (< x 20)))
+
+
 ;; ; --- Synthesis skeleton start ---
 ;; (define-symbolic x integer?)
 ;; (define solution
@@ -58,9 +63,12 @@
 ;;    #:forall (list x)
 ;;    #:guarantee
 ;;     (begin
-;;       (define multi (??))
-;;       (assert (even? (* multi x)))
-;;       (assert (> multi 0))
+;; ;;       (define multi (??))
+;; ;;       (assert (even? (* multi x)))
+;; ;;       (assert (> multi 0))
+;;       
+;;       (assume (> x 1))
+;;       (assert (> x 0))
 ;;     )
 ;;   )
 ;; )
@@ -76,4 +84,4 @@
 ;;     )
 ;;     (display "UNSAT\n")
 ;; )
-;; ; --- Synthesis skeleton end ---
+;;  ; --- Synthesis skeleton end ---

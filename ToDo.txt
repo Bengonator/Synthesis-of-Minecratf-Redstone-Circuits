@@ -3,6 +3,4 @@ Max Fragen:
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
 ----------------------
-
-Rosette:
-	-put redstone spread logic from "redstone spread.rkt" into "first try after call.rkt"
+flat liste machen is vielleicht effizienter

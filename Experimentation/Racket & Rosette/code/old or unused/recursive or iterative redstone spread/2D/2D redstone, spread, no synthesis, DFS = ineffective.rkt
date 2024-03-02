@@ -28,37 +28,37 @@
   
   ;; print world in a way, that zeros are invisible 
   ;; and digits have a trailing space
-;;   (begin
-;;   (display "-")
-;;   (for ([i nCols])
-;;       (display "-----")
-;;   )
-;;   (display "\n")
-;;   
-;;   (for ([row_idx (range nRows)])
-;;     (display "| ")
-;;     
-;;     (for ([col world])
-;;       (define num (list-ref col row_idx))
-;;       (when (< num 10)
-;;         (display " ")
-;;       )
-;;       ;;(if (eq? num 0)
-;;       ;;    (display " ")
-;;           (display num)
-;;       ;;)
-;;       (display " | ")
-;;     )
-;;     (display "\n")
-;; 
-;;     (display "-")
-;;     (for ([i nCols])
-;;       (display "-----")
-;;     )
-;;     (display "\n")
-;;   )
-;;   (display "\n")
-;;   )
+  (begin
+  (display "-")
+  (for ([i nCols])
+      (display "-----")
+  )
+  (display "\n")
+  
+  (for ([row_idx (range nRows)])
+    (display "| ")
+    
+    (for ([col world])
+      (define num (list-ref col row_idx))
+      (when (< num 10)
+        (display " ")
+      )
+      ;;(if (eq? num 0)
+      ;;    (display " ")
+          (display num)
+      ;;)
+      (display " | ")
+    )
+    (display "\n")
+
+    (display "-")
+    (for ([i nCols])
+      (display "-----")
+    )
+    (display "\n")
+  )
+  (display "\n")
+  )
 
   ;; actual redstone spread
   (define src_col_idx (list-ref cell 0))
@@ -124,7 +124,7 @@
   )
 )
 
-(define size (list 70 70))
+(define size (list 4 4))
 (define src (list 0 0))
 
 (define nCols (list-ref size 0))
