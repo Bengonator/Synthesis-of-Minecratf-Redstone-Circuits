@@ -1,7 +1,14 @@
 #lang rosette
 
-(require rosette/lib/synthax) ;; Import library for defining holes in sketches
+(require rosette/lib/synthax) ;; defining holes in sketches
+(require rosette/lib/destruct) ;; 
+(require rosette/lib/value-browser) ;; better model printing
+(require rosette/lib/angelic) ;; for choose*
+
+(error-print-width 1000) ;; Show more symbolic values in print
 ;;(output-smt (current-output-port)) ;; Print SMT output to console
+
+
 
 ; --- Synthesis skeleton start ---
 (define-symbolic i1 integer?)

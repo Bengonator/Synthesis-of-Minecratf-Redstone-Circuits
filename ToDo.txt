@@ -1,6 +1,10 @@
-tmp todos:
-Max Fragen:
+
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
-----------------------
-flat liste machen is vielleicht effizienter
+-solve printet ned in grid sondern in liste. möchte die konkreten werte des ergebnis printen können
+vllt hilft (render-value/snip)
+
+-damit möglichst wenig redstone gebraucht wird, muss i nu minimizen
+es gäbe optimize, da is aber des problem, dass i mit quersumme über grid kane direkten zahlenwerte bekomme
+weiters gibts solver-minimize
+
