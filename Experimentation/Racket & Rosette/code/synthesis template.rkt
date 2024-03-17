@@ -35,6 +35,6 @@
       (display "Generate Forms:\n")
       (generate-forms solution)
     )
-    (display "UNSAT\n")
+    (display "UNSAT")
 )
 ; --- Synthesis skeleton end ---
