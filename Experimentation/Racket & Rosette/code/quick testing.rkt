@@ -4,7 +4,15 @@
 
 (define (nl) (display "\n"))
 
-
+(define-symbolic var integer?)
+(define-symbolic var2 integer?)
+(vc)
+(assert (eq? 5 var))
+(vc)
+(solve vc)
+(vc)
+(assert (eq? 50 var2))
+(vc)
 
 
 ;; ; --- Synthesis skeleton start ---

@@ -1,10 +1,8 @@
 
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
--solve printet ned in grid sondern in liste. möchte die konkreten werte des ergebnis printen können
-vllt hilft (render-value/snip)
+-das bound verringern noch optimieren
+zb 1 mit max bound, damit man unsat gleich erkennt
+dann mit 50% bound, wenn unsat dann 75%, sonst 25% (also binary search)
 
--damit möglichst wenig redstone gebraucht wird, muss i nu minimizen
-es gäbe optimize, da is aber des problem, dass i mit quersumme über grid kane direkten zahlenwerte bekomme
-weiters gibts solver-minimize
-
+-falls sinnvoll, dann am ende (bzw vor dem "minimized print") die hashwerte auslesen und wirklich in eine liste speichern, so dass man mehr damit tun kanns
