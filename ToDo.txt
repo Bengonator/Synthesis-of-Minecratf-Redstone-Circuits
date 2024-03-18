@@ -13,3 +13,4 @@ einmal beim 1. speichern und dann beim letzten überspeichern
 das wohl dann eher wenn man es kapselt, so dass man die länge und breite auch als parameter übergibt und zb die goals als liste von listen
 
 wozu synthesise und wozu destruct?
+habs nun ah ohne destruct gschafft

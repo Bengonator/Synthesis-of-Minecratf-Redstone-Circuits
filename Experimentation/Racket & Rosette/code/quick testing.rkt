@@ -4,14 +4,26 @@
 
 (define (nl) (display "\n"))
 
-(define-symbolic var integer?)
-(define-symbolic var2 integer?)
-(vc)
-(assert (eq? 5 var))
-(vc)
 
-(solve (assert (eq? 50 var2)))
-(vc)
+(require rosette/lib/angelic)  ;; choose*
+(solve
+ (assert 
+ (choose*
+  (eq? 7 7)
+  (eq? 15 715)
+  ;;(assert (eq? val (- (apply max 1 nbs) 1)))
+  )
+ )
+)
+
+;; (define-symbolic var integer?)
+;; (define-symbolic var2 integer?)
+;; (vc)
+;; (assert (eq? 5 var))
+;; (vc)
+;; 
+;; (solve (assert (eq? 50 var2)))
+;; (vc)
 
 
 ;; ; --- Synthesis skeleton start ---
