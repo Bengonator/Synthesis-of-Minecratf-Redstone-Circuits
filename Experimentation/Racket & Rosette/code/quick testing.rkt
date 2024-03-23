@@ -5,6 +5,15 @@
 (define (nl) (display "\n"))
 
 
+;; (define s "Apple")
+;; (string-set! s 4 "y")
+;; s
+
+(define str "+-")
+
+(define ch (string-ref str 0))
+
+(display (string-append " " (string ch)))
 
 ;; (require rosette/lib/angelic)  ;; choose*
 ;; (solve
