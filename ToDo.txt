@@ -1,10 +1,6 @@
 
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
--das bound verringern noch optimieren
-zb 1 mit max bound, damit man unsat gleich erkennt
-dann mit 50% bound, wenn unsat dann 75%, sonst 25% (also binary search)
-
 -falls sinnvoll, dann am ende (bzw vor dem "minimized print") die hashwerte auslesen und wirklich in eine liste speichern, so dass man mehr damit tun kanns
 ja is sinnvoll, wenn ma die summe der world wissenwill. (apply + WORLD) statt WORLD hat dann die world-binding-liste.
 einmal beim 1. speichern und dann beim letzten überspeichern
@@ -12,5 +8,14 @@ einmal beim 1. speichern und dann beim letzten überspeichern
 -parameter machen, ob 1. lösung genügt, also man will bloß eine lösung, nicht die kleinste
 das wohl dann eher wenn man es kapselt, so dass man die länge und breite auch als parameter übergibt und zb die goals als liste von listen
 
-wozu synthesise und wozu destruct?
-habs nun ah ohne destruct gschafft
+wozu synthesise?
+
+-noch so minimizen, dass lieber ai als so.
+betrifft sowieso nur so mit level von 0
+gleiches für rs
+oder so machen, dass solution ausliest und alle so und rs mit stärke 0 zu ai macht
+
+-torches adden
+
+-mixed display adden
+oder ai so "  " machen, dann is ah weniger los

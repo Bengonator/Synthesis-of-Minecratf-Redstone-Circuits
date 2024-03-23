@@ -5,16 +5,17 @@
 (define (nl) (display "\n"))
 
 
-(require rosette/lib/angelic)  ;; choose*
-(solve
- (assert 
- (choose*
-  (eq? 7 7)
-  (eq? 15 715)
-  ;;(assert (eq? val (- (apply max 1 nbs) 1)))
-  )
- )
-)
+
+;; (require rosette/lib/angelic)  ;; choose*
+;; (solve
+;;  (assert 
+;;  (choose*
+;;   (eq? 7 7)
+;;   (eq? 15 715)
+;;   ;;(assert (eq? val (- (apply max 1 nbs) 1)))
+;;   )
+;;  )
+;; )
 
 ;; (define-symbolic var integer?)
 ;; (define-symbolic var2 integer?)

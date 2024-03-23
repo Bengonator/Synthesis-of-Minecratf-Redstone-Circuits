@@ -2,15 +2,35 @@
 
 (require rosette/lib/synthax) ;; Import library for defining holes in sketches
 
-(define (fun)
-  (set! var1 7))
+;; (define (fun)
+;;   (set! var1 7))
+;; 
+;; (define var1 5)
+;; (display var1)
+;; (display "\n")
+;; (fun)
+;; (display var1)
 
-(define var1 5)
-(display var1)
+
+(define (fun1 num)
+  (define (fun_inner num)
+    (display "inner")
+    (display num))
+  
+  (display "fun1")
+  (display num)
+  (fun_inner 5))
+
+(define (fun2)
+  (define (fun_inner)
+    (display "inner"))
+  
+  (display "fun2")
+  (fun_inner))
+
+(fun2)
 (display "\n")
-(fun)
-(display var1)
-
+(fun1 1)
 
 ;; (define var 1)
 ;; (display "var außen vorher: ")
