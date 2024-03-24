@@ -10,9 +10,5 @@ das wohl dann eher wenn man es kapselt, so dass man die länge und breite auch a
 
 wozu synthesise?
 
--noch so minimizen, dass lieber ai als so.
-betrifft sowieso nur so mit level von 0
-gleiches für rs
-oder so machen, dass solution ausliest und alle so und rs mit stärke 0 zu ai macht
-
+-redstone vllt in punkt/horizontal/vertikal aufteilen, so dass er nicht aktiviert wenn er vorbei geht
 

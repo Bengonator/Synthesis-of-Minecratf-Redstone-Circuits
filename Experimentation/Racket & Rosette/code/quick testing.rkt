@@ -4,8 +4,13 @@
 
 (define (nl) (display "\n"))
 
+(define (outer)
+  (display "outer")
 
-(display (apply max (list )))
+  
+
+
+;; (display (apply max (list )))
 
 ;; ((lambda (x) (* 2 x))
 ;; 4)
