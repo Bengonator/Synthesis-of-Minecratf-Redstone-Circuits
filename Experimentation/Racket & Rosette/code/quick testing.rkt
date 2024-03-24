@@ -5,15 +5,28 @@
 (define (nl) (display "\n"))
 
 
+(display (apply max (list )))
+
+;; ((lambda (x) (* 2 x))
+;; 4)
+
+;; (define WORLD_BLOCKS (list "ai" "rb" "rb" "tw" "ai"))
+;; 
+;; 
+;; (length
+;;  (filter
+;;   (lambda (x) (index-of (list 1 2 3 4 5 6 7) x))
+;;   WORLD_BLOCKS))
+
 ;; (define s "Apple")
 ;; (string-set! s 4 "y")
 ;; s
 
-(define str "+-")
-
-(define ch (string-ref str 0))
-
-(display (string-append " " (string ch)))
+;; (define str "+-")
+;; 
+;; (define ch (string-ref str 0))
+;; 
+;; (display (string-append " " (string ch)))
 
 ;; (require rosette/lib/angelic)  ;; choose*
 ;; (solve
@@ -25,7 +38,7 @@
 ;;   )
 ;;  )
 ;; )
-
+;; 
 ;; (define-symbolic var integer?)
 ;; (define-symbolic var2 integer?)
 ;; (vc)
@@ -34,6 +47,8 @@
 ;; 
 ;; (solve (assert (eq? 50 var2)))
 ;; (vc)
+;; (solve vc)
+;; (solve (vc))
 
 
 ;; ; --- Synthesis skeleton start ---

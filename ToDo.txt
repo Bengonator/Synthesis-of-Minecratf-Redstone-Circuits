@@ -15,7 +15,4 @@ betrifft sowieso nur so mit level von 0
 gleiches für rs
 oder so machen, dass solution ausliest und alle so und rs mit stärke 0 zu ai macht
 
--torches adden
 
--mixed display adden
-oder ai so "  " machen, dann is ah weniger los
