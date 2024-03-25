@@ -1,13 +1,6 @@
 
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
--falls sinnvoll, dann am ende (bzw vor dem "minimized print") die hashwerte auslesen und wirklich in eine liste speichern, so dass man mehr damit tun kanns
-ja is sinnvoll, wenn ma die summe der world wissenwill. (apply + WORLD) statt WORLD hat dann die world-binding-liste.
-einmal beim 1. speichern und dann beim letzten überspeichern
-
--parameter machen, ob 1. lösung genügt, also man will bloß eine lösung, nicht die kleinste
-das wohl dann eher wenn man es kapselt, so dass man die länge und breite auch als parameter übergibt und zb die goals als liste von listen
-
 wozu synthesise?
 
 -redstone vllt in punkt/horizontal/vertikal aufteilen, so dass er nicht aktiviert wenn er vorbei geht

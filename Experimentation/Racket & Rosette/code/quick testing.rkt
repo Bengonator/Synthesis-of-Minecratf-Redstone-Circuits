@@ -4,11 +4,49 @@
 
 (define (nl) (display "\n"))
 
-(define (outer)
-  (display "outer")
+(define (test op)
+  (when (index-of (list + -) op)
+    (op 4 9)))
 
+(test -)
+
+;; (or "b" "txt" "tct")
+;; 
+;; (eq? "tct" (or "tct" "txt"))
+
+;; 
+;; (define (fun op a b)
+;;   (op a b))
+;; 
+;; 
+;; (fun + 5 7)
   
 
+;; (string-append "test" "" "fg")
+;; 
+;; (display (format "\n			/setblock  ~~~a ~~~a ~~~a" 5 5 9))
+
+;; 
+;; (define command_start
+;;   "/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[
+;; 	{id:armor_stand,Health:0,Passengers:[
+;;                 {id:falling_block,BlockState:{Name:activator_rail},Passengers:[")
+;;     
+;; (define command_blocks "
+;; 			setblocks")
+;; 
+;; (define command_end ",
+;; 			{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:\"fill ~ ~ ~ ~ ~-3 ~ air\"}'},
+;; 			{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}
+;; 		]}
+;; 	]}
+;; ]}")
+;; 
+;; (display (string-append command_start command_blocks command_end))
+;; 
+
+;; (define (outer)
+;;   (display "outer")
 
 ;; (display (apply max (list )))
 
