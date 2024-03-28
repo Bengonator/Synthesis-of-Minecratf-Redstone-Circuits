@@ -1,7 +1,8 @@
 
 -warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
 
-wozu synthesise?
+-wozu synthese?
 
 -redstone vllt in punkt/horizontal/vertikal aufteilen, so dass er nicht aktiviert wenn er vorbei geht
 
+-raco symprofile MAIN.rkt
