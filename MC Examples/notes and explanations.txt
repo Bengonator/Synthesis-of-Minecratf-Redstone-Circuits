@@ -1,0 +1,29 @@
+
+Example 1:
+	I wanted two torches behind each other, the lower one being lit and the upper one being turned of.
+	The picture shows my idea of how to make it.
+	The solver quickly proved me wrong and showed me that there is a way better (minimal) solution.
+
+	Settings:
+	(define nCOLs 4)
+	(define nROWs 5)
+	(define xOFFSET 0)
+	(define yOFFSET 0)
+	(define zOFFSET 0)
+
+	Goals:
+	(add_unlit_torch_goal 1 0)
+	(add_lit_torch_goal 1 2)
+
+	Output:
+	   |  0  1  2  3       |  0  1  2  3       |  0  1  2  3 
+	----------------    ----------------    ----------------
+	 0 |  0  0  0  0     0 | ai tn ai ai     0 |    !^       
+	 1 |  0 16  0  0     1 | ai rb ai ai     1 |     X       
+	 2 |  0 16  0  0     2 | ai tw so ai     2 |     <  O    
+	 3 |  0  0  0  0     3 | ai ai ai ai     3 |             
+	 4 |  0  0  0  0     4 | ai ai ai ai     4 |             
+
+
+Example 2:
+
