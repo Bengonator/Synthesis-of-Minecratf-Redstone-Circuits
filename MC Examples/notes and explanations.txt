@@ -1,3 +1,9 @@
+minecraft:bedrock,minecraft:light_blue_concrete,minecraft:cyan_concrete,minecraft:blue_concrete;minecraft:plains
+/time set 12600
+Dramatic Skys Demo 1.5.3.19
+Faithful 64x - Beta 9
+
+
 
 Example 1:
 	I wanted two torches behind each other, the lower one being lit and the upper one being turned of.

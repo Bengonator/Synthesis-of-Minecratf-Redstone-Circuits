@@ -6,3 +6,5 @@
 -redstone vllt in punkt/horizontal/vertikal aufteilen, so dass er nicht aktiviert wenn er vorbei geht
 
 -raco symprofile MAIN.rkt
+
+
