@@ -5,6 +5,4 @@
 
 -raco symprofile MAIN.rkt
 
--change rs costs
-
 -rs must connect
