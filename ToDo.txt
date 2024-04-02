@@ -8,5 +8,3 @@
 -change rs costs
 
 -rs must connect
-
--add command to clean all the blocks, but not stupid fill, but fo each non air block, build up command that paces air
