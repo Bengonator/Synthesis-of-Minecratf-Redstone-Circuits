@@ -5,11 +5,13 @@ Faithful 64x - Beta 9
 
 
 
-Example 1:
-	I wanted two torches behind each other, the lower one being lit and the upper one being turned of.
-	The picture shows my idea of how to make it.
-	The solver quickly proved me wrong and showed me that there is a way better (minimal) solution.
-
+Example 1: know-it-all
+	
+	I wanted two torches behind each other, with only one solid block in between. The lower torch one should be lit and the upper one should be turned of.
+	The solver quickly showed me that there is a way better smaller solution.
+	
+	! Due to many changes in the alogrithm, the result now differs !
+	
 	Settings:
 	(define nCOLs 4)
 	(define nROWs 5)
@@ -31,5 +33,28 @@ Example 1:
 	 4 |  0  0  0  0     4 | ai ai ai ai     4 |             
 
 
-Example 2:
+Example 2: sluice
+	
+	Settings:
+	(define nCOLs 2)
+	(define nROWs 10)
+	(define xOFFSET 1)
+	(define yOFFSET -2)
+	(define zOFFSET 0)
+	
+	Goals:
+	(add_out_in_goal 1 0 0 16)
+	(add_block_goal "rs" 1 1)
+	(add_lit_torch_goal 0 6)
+	(add_unlit_torch_goal 0 9)
+	(add_unlit_torch_goal 0 6 #f)
+	(add_lit_torch_goal 0 9 #f)
 
+Example 3:
+	Settings:
+	
+	
+	Goals:
+	
+
+Example 4:
