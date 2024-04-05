@@ -48,28 +48,42 @@ Example 2: sluice
 	(add_unlit_torch_goal 0 9)
 	(add_unlit_torch_goal 0 6 #f)
 	(add_lit_torch_goal 0 9 #f)
+	
+	Output:
+	
 
 	Set:
 	summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~4 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=west]'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~5 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
 	
 	Clear:
 	summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~3 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~4 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~5 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 air'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
-
+	
 
 Example 3: two entrances
 	Settings:
 	(define nCOLs 3)
-	(define nROWs 7)
+	(define nROWs 6)
 	(define xOFFSET 1)
 	(define yOFFSET -2)
-	(define zOFFSET -1)
+	(define zOFFSET 0)
 	
 	Goals:
-	(add_out_in_goal 2 0 0 16)
-	(add_unlit_torch_goal 0 6)
-	(add_lit_torch_goal 2 6)
-	(add_lit_torch_goal 0 6 #f)
-	(add_unlit_torch_goal 2 6 #f)
+	(set_input 2 0 "rs" 0 15)
+	(add_block_goal "rs" 2 1)
+	(add_unlit_torch_goal 0 5)
+	(add_lit_torch_goal 2 5)
+	(add_lit_torch_goal 0 5 #f)
+	(add_unlit_torch_goal 2 5 #f)
+	
+	Output:
+	IF |  0  1  2  |  SF |  0  1  2 
+	-------------  |  -------------
+	 0 |        .  |   0 |        * 
+	 1 |  O  .  .  |   1 |  O  *  * 
+	 2 |  v     .  |   2 | !v     * 
+	 3 |  *     .  |   3 |  .     * 
+	 4 |  O     O  |   4 |  O     O 
+	 5 | !v     v  |   5 |  v    !v 
 	
 	Set:
 	summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~3 ~-4 ~0 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~1 stone'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~2 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~5 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
