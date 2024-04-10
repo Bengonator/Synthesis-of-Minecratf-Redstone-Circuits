@@ -1,7 +1,0 @@
-
--warum darf nach generate-forms nix mehr stehen im 'if', da er sonst nix generiert?
-
--wozu synthese?
-
--raco symprofile MAIN.rkt
-
