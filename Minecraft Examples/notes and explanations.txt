@@ -38,30 +38,28 @@ Example 2: sluice
 	
 	Goals:
 	(set_input 1 0 "rs" 0 15)
-	(add_lit_torch_goal 0 5)
-	(add_unlit_torch_goal 0 8)
-	(add_unlit_torch_goal 0 5 #f)
-	(add_lit_torch_goal 0 8 #f)
+	(add_on_off_torch_goal 0 5)
+	(add_off_on_torch_goal 0 8)
 	
 	Output:
 	BL |  0  1  |  IF |  0  1  |  SF |  0  1 
 	----------  |  ----------  |  ----------
 	 0 | ai rs  |   0 |     .  |   0 |     * 
 	 1 | ai rs  |   1 |     .  |   1 |     * 
-	 2 | ai rs  |   2 |     .  |   2 |     * 
-	 3 | ai rs  |   3 |     .  |   3 |     * 
-	 4 | ai rs  |   4 |     .  |   4 |     * 
-	 5 | tw so  |   5 |  <  O  |   5 | !<  O 
+	 2 | rs rs  |   2 |  .  .  |   2 |  *  * 
+	 3 | rs ai  |   3 |  .     |   3 |  *    
+	 4 | so ai  |   4 |  O     |   4 |  O    
+	 5 | ts ai  |   5 |  v     |   5 | !v    
 	 6 | rs ai  |   6 |  *     |   6 |  .    
 	 7 | so ai  |   7 |  O     |   7 |  O    
-	 8 | ts ai  |   8 | !v     |   8 |  v    
+	 8 | ts ai  |   8 | !v     |   8 |  v     
 
 	Set:
-	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~4 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=west]'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~5 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
+	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
 	
 	Clear:
-	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~3 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~4 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~5 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 air'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
-
+	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~2 ~-4 ~0 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~2 air'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~3 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~4 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~6 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~7 air'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~8 air'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
+	
 
 Example 3: two entrances
 	Settings:
@@ -73,11 +71,8 @@ Example 3: two entrances
 	
 	Goals:
 	(set_input 2 0 "rs" 0 15)
-	(add_block_goal "rs" 2 1)
-	(add_unlit_torch_goal 0 5)
-	(add_lit_torch_goal 2 5)
-	(add_lit_torch_goal 0 5 #f)
-	(add_unlit_torch_goal 2 5 #f)
+	(add_off_on_torch_goal 0 5)
+	(add_on_off_torch_goal 2 5)
 	
 	Output:
 	IF |  0  1  2  |  SF |  0  1  2 
@@ -106,16 +101,11 @@ Example 4: energy saving
 	
 	Goals:
 	(set_input 2 5 "rs" 0 15)
-	(add_lit_torch_goal 2 2)
-	(add_unlit_torch_goal 2 2 #f)
-	(add_unlit_torch_goal 0 0)
-	(add_lit_torch_goal 0 0 #f)
-	(add_unlit_torch_goal 4 0)
-	(add_lit_torch_goal 4 0 #f)
-	(add_unlit_torch_goal 0 4)
-	(add_lit_torch_goal 0 4 #f)
-	(add_unlit_torch_goal 4 4)
-	(add_lit_torch_goal 4 4 #f)
+	(add_off_on_torch_goal 2 2)
+	(add_off_on_torch_goal 0 0)
+	(add_off_on_torch_goal 4 0)
+	(add_off_on_torch_goal 0 4)
+	(add_off_on_torch_goal 4 4)
 	
 	Output:
 	BL |  0  1  2  3  4  |  IF |  0  1  2  3  4  |  SF |  0  1  2  3  4 
