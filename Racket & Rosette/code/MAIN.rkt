@@ -247,7 +247,7 @@
         (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t #t))
         (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #t #f)))
 
-      (when(not (eq? col 0)) ; West
+      (when (not (eq? col 0)) ; West
         (set! nbs1 (add_to_nbs nbs1 (- col 1) row #f #t))
         (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f #f)))
       
