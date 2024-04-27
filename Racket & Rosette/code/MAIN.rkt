@@ -56,15 +56,15 @@
        (>= row 0)
        (< col nCOLs)
        (< row nROWs)))
-
+    
     (if (is_in_bounds col row)
         (+ (* row nCOLs) col)
-
+        
         ; else
         (begin 
           (when throw_error
             (raise (err_out_of_bounds col row)))
-
+          
           -1)))
   
   ; (get_number name)
@@ -74,14 +74,14 @@
     (when (not indexOrFalse)
       (raise (format "Invalid block name '~a'. Name must be one of the follwing: ~a"
                      name BLOCKS)))
-
+    
     indexOrFalse)
   
   ; (get_block col row [throw_error #t])
   (define (get_block col row [throw_error #t])
-
+    
     (define index (get_index col row throw_error))
-
+    
     (if (eq? index -1)
         (get_number "xx")
         (list-ref WORLD_BLOCKS index)))
@@ -94,7 +94,7 @@
     (cond
       [(and (not is_col_list) (not is_row_list))
        (assert (eq? (get_block col row) (get_number name)))]
-
+      
       [(and (not is_col_list) is_row_list)
        (for ([r row])
          (assert (eq? (get_block col r) (get_number name))))]
@@ -168,12 +168,12 @@
   (define (add_unlit_torch_goal col row [is_initial #t])
     (add_torch_goal col row)
     (add_str_goal = 0 col row is_initial))
-
+  
   ; (add_on_off_torch_goal col row)
   (define (add_on_off_torch_goal col row)
     (add_lit_torch_goal col row)
     (add_unlit_torch_goal col row #f))
-
+  
   ; (add_off_on_torch_goal col row)
   (define (add_off_on_torch_goal col row)
     (add_lit_torch_goal col row #f)
@@ -184,16 +184,16 @@
     (assert (or
              (is_torch? (get_block col row))
              (eq? (get_block col row) (get_number "so"))))
-
+    
     (add_str_goal > 0 col row)
     (add_str_goal = 0 col row #f))
-
+  
   ; (add_off_on_torch_or_solid_goal col row)
   (define (add_off_on_torch_or_solid_goal col row)
     (assert (or
              (is_torch? (get_block col row))
              (eq? (get_block col row) (get_number "so"))))
-
+    
     (add_str_goal = 0 col row)
     (add_str_goal > 0 col row #f))
   
@@ -202,10 +202,10 @@
     
     ; (add_solid_asserts str1 str2 col row)
     (define (add_solid_asserts str1 str2 col row)
-
+      
       ; (add_to_nbs nbs col row is_north_or_south is_initial)
       (define (add_to_nbs nbs col row is_north_or_south is_initial)
-
+        
         ; (is_rb_or_rs_or_torch block)
         (define (is_rb_or_rs_or_torch block)
           (or
@@ -214,7 +214,7 @@
            (is_torch? block)))
         
         (define block (get_block col row))
-    
+        
         (if (not (eq? block (get_number "rs")))
             nbs
             
@@ -225,47 +225,47 @@
               
               (define nb_one (get_block (+ col col_offset) (- row row_offset) #f))
               (define nb_two (get_block (- col col_offset) (+ row row_offset) #f))
-
+              
               (if (or
                    (is_rb_or_rs_or_torch nb_one)
                    (is_rb_or_rs_or_torch nb_two))
                   nbs
                   (append nbs (list (get_str col row is_initial)))))))
-  
+      
       (define nbs1 (list))
       (define nbs2 (list))
-
+      
       (when (not (eq? row 0)) ; North
         (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t #t))
         (set! nbs2 (add_to_nbs nbs2 col (- row 1) #t #f)))
-
+      
       (when (not (eq? col (- nCOLs 1))) ; East
         (set! nbs1 (add_to_nbs nbs1 (+ col 1) row #f #t))
         (set! nbs2 (add_to_nbs nbs2 (+ col 1) row #f #f)))
-
+      
       (when (not (eq? row (- nROWs 1))) ; South
         (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t #t))
         (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #t #f)))
-
+      
       (when (not (eq? col 0)) ; West
         (set! nbs1 (add_to_nbs nbs1 (- col 1) row #f #t))
         (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f #f)))
       
       (assert (eq? str1 (apply max 0 nbs1)))
       (assert (eq? str2 (apply max 0 nbs2))))
-
+    
     ; (add_rsdust_asserts str1 str2 col row)
     (define (add_rsdust_asserts str1 str2 col row)
-
+      
       ; (add_to_nbs nbs col row is_initial)
       (define (add_to_nbs nbs col row is_initial)
         (if (eq? (get_block col row) (get_number "so"))
             nbs
             (append nbs (list (get_str col row is_initial)))))
-  
+      
       (define nbs1 (list))
       (define nbs2 (list))
-  
+      
       (when (not (eq? row 0)) ; North
         (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t))
         (set! nbs2 (add_to_nbs nbs2 col (- row 1) #f)))
@@ -281,29 +281,29 @@
       (when (not (eq? col 0)) ; West
         (set! nbs1 (add_to_nbs nbs1 (- col 1) row #t))
         (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f)))
-
+      
       (assert (eq? str1 (- (apply max 1 nbs1) 1)))
       (assert (eq? str2 (- (apply max 1 nbs2) 1))))
     
     ; (add_torch_asserts str1 str2 col row)
     (define (add_torch_asserts str1 str2 col row)
       (define nb (get_block col row))
-  
+      
       (assert (or
                (eq? nb (get_number "so"))
                (eq? nb (get_number "rb"))))
-  
+      
       (if (eq? nb (get_number "rb"))
           (and
            (assert (eq? str1 0))
            (assert (eq? str2 0)))
-
+          
           ; else
           (begin
             (if (eq? (get_str col row) 0)
                 (assert (eq? str1 16))
                 (assert (eq? str1 0)))
-
+            
             (if (eq? (get_str col row #f) 0)
                 (assert (eq? str2 16))
                 (assert (eq? str2 0))))))
@@ -367,7 +367,7 @@
         (define block (get_block col row))
         (define str1 (get_str col row))
         (define str2 (get_str col row #f))
-
+        
         (define is_block_symbolic (symbolic? block))
         (define is_str1_symbolic (symbolic? str1))
         (define is_str2_symbolic (symbolic? str2))
@@ -394,11 +394,11 @@
   
   ; (solve_world)
   (define (solve_world)
-
+    
     ; (get_model_block binding col row)
     (define (get_model_block binding col row)
       (define model_block (hash-ref binding (get_block col row) -1))
-
+      
       (if (= model_block -1)
           (get_block col row)
           model_block))
@@ -415,9 +415,9 @@
             (for ([col nCOLs])
               (for ([row nROWs])
                 (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_block col row))))))
-
+            
             costs)))
-
+    
     ; (get_block_costs)
     (define (get_block_costs)      
       (define costs 0)
@@ -426,7 +426,7 @@
         (for ([row nROWs])          
           (when (not (eq? (get_block col row) (get_number "ai")))
             (set! costs (+ costs 1)))))
-
+      
       costs)
     
     ; (get_model_str binding col row [is_initial #t])
@@ -436,7 +436,7 @@
       (if (= model_str -1)
           (get_str col row is_initial)
           model_str))
-
+    
     ; (get_name number)
     (define (get_name number)
       (when (or
@@ -444,7 +444,7 @@
              (>= number (length BLOCKS)))
         (raise (format "Invalid block number '~a'. Number must be between 0 and ~a."
                        number ( - (length BLOCKS) 1))))
-
+      
       (list-ref BLOCKS number))
     
     ; (print_layers binding)
@@ -457,22 +457,22 @@
                (>= number (length BLOCKS)))
           (raise (format "Invalid block number '~a'. Number must be between 0 and ~a."
                          number ( - (length BLOCKS) 1))))
-
+        
         (define name (get_name number))
         (define fancy_name (list-ref BLOCKS_FANCY number))
-
+        
         (cond
           [(eq? name "rs")
            (string-append " "
                           (if (eq? str 0)
                               (string (string-ref fancy_name 1))
                               (string (string-ref fancy_name 0))))]
-    
+          
           [(index-of (list "tn" "te" "ts" "tw") name)
            (if (eq? str 0)
                fancy_name
                (string-append " " (string (string-ref fancy_name 1))))]
-
+          
           [else fancy_name]))
       
       (when (> n_prints 0)
@@ -492,9 +492,9 @@
                  [(= 3 nth) "SR"] ; step redstone
                  [(= 4 nth) "SF"] ; step fancy
                  [else "  "]))
-          
+              
               (display " | ")
-          
+              
               (for ([c nCOLs])
                 (when (< c 10) (display " "))
                 (display c)
@@ -502,11 +502,11 @@
                             (= c (- nCOLs 1))
                             (eq? nth last_print)))
                   (display " ")))
-    
+              
               (when (not (eq? nth last_print)) (display " |  "))))
-      
+          
           (nl)
-      
+          
           (for ([nth max_prints])
             (when (list-ref PRINT_LAYERS nth)
               (display "----")
@@ -532,23 +532,23 @@
                   (cond              
                     [(eq? nth 0)
                      (display (get_name (get_model_block binding c r)))]
-              
+                    
                     [(eq? nth 1)
                      (begin
                        (define str (get_model_str binding c r))
                        (when (<= 0 str 9) (display " "))
                        (display str))]
-
+                    
                     [(eq? nth 2)
                      (define str (get_model_str binding c r))
                      (display (get_fancy_name (get_model_block binding c r) str))]
-
+                    
                     [(eq? nth 3)
                      (begin
                        (define str (get_model_str binding c r #f))
                        (when (<= 0 str 9) (display " "))
                        (display str))]
-              
+                    
                     [(eq? nth 4)
                      (define str (get_model_str binding c r #f))
                      (display (get_fancy_name (get_model_block binding c r) str))])
@@ -559,9 +559,9 @@
                     (display " "))))
               
               (when (not (eq? nth last_print)) (display " |  "))))
-    
+          
           (nl))))
-      
+    
     ; (print_line length)
     (define (print_line length)
       (when (> length 0)
@@ -571,10 +571,10 @@
     ; (round_down number)
     (define (round_down number)
       (inexact->exact (floor number)))
-
+    
     ; (print_command binding x_offset y_offset z_offset)
     (define (print_command binding x_offset y_offset z_offset)
-
+      
       ; (new_block_command col row name)
       (define (new_block_command col row name)
         (string-append
@@ -585,7 +585,7 @@
       
       (define tab "")
       (define nwl "")
-
+      
       (when PRETTIFY_COMMANDS
         (set! tab "\t")
         (set! nwl "\n"))
@@ -594,10 +594,10 @@
                              "/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[" nwl
                              tab "{id:armor_stand,Health:0,Passengers:[" nwl
                              tab tab "{id:falling_block,BlockState:{Name:activator_rail},Passengers:[" nwl))
-    
+      
       (define commands_set_blocks "")
       (define commands_clear_blocks "")
-
+      
       (define command_end (string-append
                            (when REPLACE_COMMAND_BLOCK (string-append tab tab tab "{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'}," nwl))
                            tab tab tab "{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:\"fill ~ ~ ~ ~ ~-3 ~ air\"}'}," nwl
@@ -605,7 +605,7 @@
                            tab tab "]}" nwl
                            tab "]}" nwl
                            "]}\n\n"))
-    
+      
       (for ([r nROWs])
         (for ([c nCOLs])
           (define block (get_name (get_model_block binding c r)))
@@ -613,7 +613,7 @@
           
           (when (not (or (eq? block "ai") (eq? block "oi")))
             (define name_in_game "")
-          
+            
             (cond
               [(eq? block "so") (set! name_in_game "stone")]
               [(eq? block "rb") (set! name_in_game "redstone_block")]
@@ -628,27 +628,27 @@
                         [(eq? block "ts") "facing=south"]
                         [(eq? block "tw") "facing=west"])
                       (if (eq? str 0) ",lit=false]" "]")))])
-          
+            
             (define new_set_block_command (new_block_command c r name_in_game))          
             (set! commands_set_blocks (string-append commands_set_blocks new_set_block_command))
-
+            
             (define new_clear_block_command (new_block_command c r "air"))         
             (set! commands_clear_blocks (string-append commands_clear_blocks new_clear_block_command)))))
-    
+      
       (display "Copy command")
       (when PRINT_CLEAR_COMMAND (display "s"))
       (display " into a command block:\n")
       (nl)
       (display "Command to set the blocks:\n")
       (display (string-append command_start commands_set_blocks command_end))
-
+      
       (when PRINT_CLEAR_COMMAND
         (display "Command to clear the blocks:\n")
         (display (string-append command_start commands_clear_blocks command_end))))
     
     (define n_prints (- (length PRINT_LAYERS) (length (filter false? PRINT_LAYERS))))
     (define (colon_nl) (display (if (eq? n_prints 0) "\n" ":\n")))
-
+    
     ; (
     ;    column header width
     ;    + (size per column * number of columns)
@@ -657,13 +657,13 @@
     ; * number of tables
     ; - space after last column of last table
     (define line_len (- (* n_prints (+ 4 (* nCOLs 3) 5)) 5))
-  
+    
     (add_world_asserts)
-  
+    
     (display "\nStarting the calculation:\n\n")
-  
+    
     (define solution (solve vc))
-
+    
     (if (not (sat? solution))
         (display "UNSAT\n\n")
         
@@ -679,23 +679,23 @@
             (when PRINT_STEPS
               (print_line line_len)
               (display "Minimizing cost power level:\n"))
-
+            
             (define last_sat_solution solution)
-
+            
             (define max_cost_bound
               (if (not USE_SPECIFIED_COSTS)
                   (* LEN 16)
-                       
+                  
                   ; else
                   (begin
                     (define costs 0)
-            
+                    
                     (for ([col nCOLs])
                       (for ([row nROWs])
                         (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_model_block (model solution) col row))))))
-
+                    
                     costs)))
-              
+            
             (define last_sat_cost_bound max_cost_bound)
             (define last_unsat_cost_bound -1)
             
@@ -703,34 +703,34 @@
             (define exponent 0)
             (while (<= 0 cost_bound max_cost_bound)
                    (when (eq? 1 (- (floor last_sat_cost_bound) (floor last_unsat_cost_bound))) (break))
-               
+                   
                    (set! solution (solve (assert (<= (get_costs) cost_bound))))
-               
+                   
                    (set! exponent (+ exponent 1))
-
+                   
                    (if (sat? solution)
                        (begin                     
                          (when PRINT_STEPS
                            (display (format "\nStep ~a: SAT with cost bound ~a" exponent cost_bound))
                            (colon_nl)
                            (print_layers (model solution) n_prints))
-                     
+                         
                          (set! last_sat_solution solution)
                          (set! last_sat_cost_bound cost_bound)
                          (set! cost_bound (- cost_bound (/ max_cost_bound (expt 2 exponent)))))
-
+                       
                        ; else
                        (begin
                          (when PRINT_STEPS
                            (display (format "\nStep ~a: UNSAT with cost bound ~a\n" exponent cost_bound)))
-
+                         
                          (set! last_unsat_cost_bound cost_bound)
                          (set! cost_bound (+ cost_bound (/ max_cost_bound (expt 2 exponent)))))))
-
+            
             (when PRINT_STEPS
               (print_line line_len)
               (nl))
-          
+            
             (display (format "SAT with minimal cost bound ~a" (round_down last_sat_cost_bound)))
             (colon_nl)
             (print_layers (model last_sat_solution) n_prints)
@@ -741,15 +741,15 @@
             (when PRINT_STEPS
               (print_line line_len)
               (display "Minimizing amount of non-air blocks:\n"))
-          
+            
             (set! last_sat_solution solution)
             (define max_blocks_bound (* nCOLs nROWs))
             (define last_sat_blocks_bound max_blocks_bound)
             (define last_unsat_blocks_bound -1)
-
+            
             (define blocks_bound (real->double-flonum max_blocks_bound))
             (set! exponent 0)
-
+            
             (while (<= 0 blocks_bound max_blocks_bound)
                    (when (eq? 1 (- (floor last_sat_blocks_bound) (floor last_unsat_blocks_bound))) (break))
                    
@@ -757,9 +757,9 @@
                          (solve (and
                                  (assert (<= (get_costs) last_sat_cost_bound))
                                  (assert (<= (get_block_costs) blocks_bound)))))
-               
+                   
                    (set! exponent (+ exponent 1))
-
+                   
                    (if (sat? solution)
                        (begin                     
                          (when PRINT_STEPS
@@ -770,15 +770,15 @@
                          (set! last_sat_solution solution)
                          (set! last_sat_blocks_bound blocks_bound)
                          (set! blocks_bound (- blocks_bound (/ max_blocks_bound (expt 2 exponent)))))
-
+                       
                        ; else
                        (begin
                          (when PRINT_STEPS
                            (display (format "\nStep ~a: UNSAT with blocks bound ~a\n" exponent blocks_bound)))
-
+                         
                          (set! last_unsat_blocks_bound blocks_bound)
                          (set! blocks_bound (+ blocks_bound (/ max_blocks_bound (expt 2 exponent)))))))
-
+            
             (when PRINT_STEPS
               (print_line line_len)
               (nl))
@@ -788,7 +788,7 @@
             (colon_nl)
             (print_layers binding n_prints)
             (nl))
-        
+          
           (when (and PRINT_STEPS PRINT_COMMAND)
             (print_line line_len))
           
@@ -834,7 +834,7 @@
   
   (define BLOCKS       (list "xx" "ai" "so" "rb" "rs" "tn" "te" "ts" "tw"))
   (define BLOCKS_FANCY (list "??" "  " " O" " X" "*." "!^" "!>" "!v" "!<"))
-    
+  
   (when (not (eq? (length SPECIFIED_COSTS) (length BLOCKS)))
     (raise (format
             "Length of specified costs must be equal to length of blocks, but they are '~a' and '~a'."
