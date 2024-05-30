@@ -45,10 +45,6 @@
   ; (get_index col row)
   (define (get_index col row [throw_error #t])
     
-    ; (err_out_of_bounds col row)
-    (define (err_out_of_bounds col row)
-      (format "Invalid index at col ~a and row ~a. Maximum indices are ~a and ~a." col row (- nCOLs 1) (- nROWs 1)))
-    
     ; (is_in_bounds col row)
     (define (is_in_bounds col row)
       (and
@@ -63,7 +59,8 @@
         ; else
         (begin 
           (when throw_error
-            (raise (err_out_of_bounds col row)))
+            (raise (format "Invalid index at col ~a and row ~a. Maximum indices are ~a and ~a."
+                           col row (- nCOLs 1) (- nROWs 1))))
           
           -1)))
   
@@ -171,22 +168,13 @@
   
   ; (add_off_on_torch_goal col row)
   (define (add_off_on_torch_goal col row)
-    (add_lit_torch_goal col row #f)
-    (add_unlit_torch_goal col row))
+    (add_unlit_torch_goal col row)
+    (add_lit_torch_goal col row #f))
   
   ; (add_on_off_torch_goal col row)
   (define (add_on_off_torch_goal col row)
     (add_lit_torch_goal col row)
     (add_unlit_torch_goal col row #f))
-  
-  ; (add_on_off_torch_or_solid_goal col row)
-  (define (add_on_off_torch_or_solid_goal col row)
-    (assert (or
-             (is_torch? (get_block col row))
-             (eq? (get_block col row) (get_number "so"))))
-    
-    (add_str_goal > 0 col row)
-    (add_str_goal = 0 col row #f))
   
   ; (add_off_on_torch_or_solid_goal col row)
   (define (add_off_on_torch_or_solid_goal col row)
@@ -196,6 +184,15 @@
     
     (add_str_goal = 0 col row)
     (add_str_goal > 0 col row #f))
+  
+  ; (add_on_off_torch_or_solid_goal col row)
+  (define (add_on_off_torch_or_solid_goal col row)
+    (assert (or
+             (is_torch? (get_block col row))
+             (eq? (get_block col row) (get_number "so"))))
+    
+    (add_str_goal > 0 col row)
+    (add_str_goal = 0 col row #f))
   
   ; (add_world_asserts)
   (define (add_world_asserts)
@@ -876,8 +873,11 @@
 ; (add_torch_goal col row)
 ; (add_unlit_torch_goal col row [is_initial])
 ; (add_lit_torch_goal col row [is_initial])
+
 ; (add_off_on_torch_goal col row)
 ; (add_on_off_torch_goal col row)
+; (add_off_on_torch_or_solid_goal col row)
+; (add_on_off_torch_or_solid_goal col row)
 
 (add_block_goal "rb" '(0 1) 0)
 
