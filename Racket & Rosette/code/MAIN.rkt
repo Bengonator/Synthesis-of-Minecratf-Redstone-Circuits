@@ -44,24 +44,18 @@
   
   ; (get_index col row)
   (define (get_index col row [throw_error #t])
-    
-    ; (is_in_bounds col row)
-    (define (is_in_bounds col row)
-      (and
-       (>= col 0)
-       (>= row 0)
-       (< col nCOLs)
-       (< row nROWs)))
-    
-    (if (is_in_bounds col row)
+    (if (and
+         (>= col 0)
+         (>= row 0)
+         (< col nCOLs)
+         (< row nROWs))
         (+ (* row nCOLs) col)
         
         ; else
-        (begin 
+        (begin
           (when throw_error
             (raise (format "Invalid index at col ~a and row ~a. Maximum indices are ~a and ~a."
                            col row (- nCOLs 1) (- nROWs 1))))
-          
           -1)))
   
   ; (get_number name)
