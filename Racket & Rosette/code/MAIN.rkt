@@ -792,7 +792,8 @@
           (when (and
                  PRINT_COMMAND
                  (not (null? binding)))
-            (print_command binding xOFFSET yOFFSET zOFFSET))))))
+            (print_command binding xOFFSET yOFFSET zOFFSET)))))
+  )
 
 ; === SETTINGS ===
 (begin
@@ -843,7 +844,6 @@
             "Length of specified costs must be equal to length of blocks, but they are '~a' and '~a'."
             (length SPECIFIED_COSTS) (length BLOCKS))))
   
-  (define LEN -1)
   (define WORLD_BLOCKS (list))
   (define WORLD_REDSTONE (list))
   (define WORLD_REDSTONE_2 (list))
@@ -851,7 +851,7 @@
   (when (or (<= nCOLs 0) (<= nROWs 0))
     (raise "Amount of columns and rows must each be higher than 0."))
   
-  (set! LEN (* nCOLs nROWs))
+  (define LEN (* nCOLs nROWs))
   
   (define-symbolic sym_world_blocks integer? #:length LEN)
   (set! WORLD_BLOCKS sym_world_blocks)
@@ -860,7 +860,8 @@
   (set! WORLD_REDSTONE sym_world_redstone)
   
   (define-symbolic sym_world_redstone_2 integer? #:length LEN)
-  (set! WORLD_REDSTONE_2 sym_world_redstone_2))
+  (set! WORLD_REDSTONE_2 sym_world_redstone_2)
+  )
 
 ; === MAIN: add goals here ===
 
