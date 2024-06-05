@@ -49,7 +49,7 @@
          (>= row 0)
          (< col nCOLs)
          (< row nROWs))
-        (+ (* row nCOLs) col)
+        (+ col (* row nCOLs))
         
         ; else
         (begin
@@ -830,8 +830,8 @@
 ; === GLOBAL VARIABLES ===
 (begin
   
-  (define BLOCKS       (list "xx" "ai" "so" "rb" "rs" "tn" "te" "ts" "tw"))
-  (define BLOCKS_FANCY (list "??" "  " " O" " X" "*." "!^" "!>" "!v" "!<"))
+  (define BLOCKS       '("xx" "ai" "so" "rb" "rs" "tn" "te" "ts" "tw"))
+  (define BLOCKS_FANCY '("??" "  " " O" " X" "*." "!^" "!>" "!v" "!<"))
   
   (when (not (eq? (length SPECIFIED_COSTS) (length BLOCKS)))
     (raise (format
