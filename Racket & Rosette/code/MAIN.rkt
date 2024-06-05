@@ -69,8 +69,7 @@
     indexOrFalse)
   
   ; (get_block col row [throw_error #t])
-  (define (get_block col row [throw_error #t])
-    
+  (define (get_block col row [throw_error #t])    
     (define index (get_index col row throw_error))
     
     (if (eq? index -1)
