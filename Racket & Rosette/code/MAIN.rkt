@@ -187,9 +187,6 @@
     (add_str_goal > 0 col row)
     (add_str_goal = 0 col row #f))
   
-  ; (nl)
-  (define (nl) (display "\n"))
-  
   ; (solve_world)
   (define (solve_world)
     
@@ -405,7 +402,10 @@
     
     ; (print_layers binding)
     (define (print_layers binding n_prints)
-
+      
+      ; (nl)
+      (define (nl) (display "\n"))
+      
       ; (get_fancy_name number str)
       (define (get_fancy_name number str)
         (when (or
