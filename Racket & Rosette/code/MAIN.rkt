@@ -187,245 +187,203 @@
     (add_str_goal > 0 col row)
     (add_str_goal = 0 col row #f))
   
-  ; (add_world_asserts)
-  (define (add_world_asserts)
-    
-    ; (add_solid_asserts str1 str2 col row)
-    (define (add_solid_asserts str1 str2 col row)
-      
-      ; (add_to_nbs nbs col row is_north_or_south is_initial)
-      (define (add_to_nbs nbs col row is_north_or_south is_initial)
-        
-        ; (is_rb_or_rs_or_torch block)
-        (define (is_rb_or_rs_or_torch block)
-          (or
-           (eq? block (get_number "rb"))
-           (eq? block (get_number "rs"))
-           (is_torch? block)))
-        
-        (define block (get_block col row))
-        
-        (if (not (eq? block (get_number "rs")))
-            nbs
-            
-            ; else
-            (begin
-              (define col_offset (if is_north_or_south 1 0))
-              (define row_offset (if is_north_or_south 0 1))
-              
-              (define nb_one (get_block (+ col col_offset) (- row row_offset) #f))
-              (define nb_two (get_block (- col col_offset) (+ row row_offset) #f))
-              
-              (if (or
-                   (is_rb_or_rs_or_torch nb_one)
-                   (is_rb_or_rs_or_torch nb_two))
-                  nbs
-                  (append nbs (list (get_str col row is_initial)))))))
-      
-      (define nbs1 (list))
-      (define nbs2 (list))
-      
-      (when (not (eq? row 0)) ; North
-        (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t #t))
-        (set! nbs2 (add_to_nbs nbs2 col (- row 1) #t #f)))
-      
-      (when (not (eq? col (- nCOLs 1))) ; East
-        (set! nbs1 (add_to_nbs nbs1 (+ col 1) row #f #t))
-        (set! nbs2 (add_to_nbs nbs2 (+ col 1) row #f #f)))
-      
-      (when (not (eq? row (- nROWs 1))) ; South
-        (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t #t))
-        (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #t #f)))
-      
-      (when (not (eq? col 0)) ; West
-        (set! nbs1 (add_to_nbs nbs1 (- col 1) row #f #t))
-        (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f #f)))
-      
-      (assert (eq? str1 (apply max 0 nbs1)))
-      (assert (eq? str2 (apply max 0 nbs2))))
-    
-    ; (add_rsdust_asserts str1 str2 col row)
-    (define (add_rsdust_asserts str1 str2 col row)
-      
-      ; (add_to_nbs nbs col row is_initial)
-      (define (add_to_nbs nbs col row is_initial)
-        (if (eq? (get_block col row) (get_number "so"))
-            nbs
-            (append nbs (list (get_str col row is_initial)))))
-      
-      (define nbs1 (list))
-      (define nbs2 (list))
-      
-      (when (not (eq? row 0)) ; North
-        (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t))
-        (set! nbs2 (add_to_nbs nbs2 col (- row 1) #f)))
-      
-      (when (not (eq? col (- nCOLs 1))) ; East
-        (set! nbs1 (add_to_nbs nbs1 (+ col 1) row #t))
-        (set! nbs2 (add_to_nbs nbs2 (+ col 1) row #f)))
-      
-      (when (not (eq? row (- nROWs 1))) ; South
-        (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t))
-        (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #f)))
-      
-      (when (not (eq? col 0)) ; West
-        (set! nbs1 (add_to_nbs nbs1 (- col 1) row #t))
-        (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f)))
-      
-      (assert (eq? str1 (- (apply max 1 nbs1) 1)))
-      (assert (eq? str2 (- (apply max 1 nbs2) 1))))
-    
-    ; (add_torch_asserts str1 str2 col row)
-    (define (add_torch_asserts str1 str2 col row)
-      (define nb (get_block col row))
-      
-      (assert (or
-               (eq? nb (get_number "so"))
-               (eq? nb (get_number "rb"))))
-      
-      (if (eq? nb (get_number "rb"))
-          (and
-           (assert (eq? str1 0))
-           (assert (eq? str2 0)))
-          
-          ; else
-          (begin
-            (if (eq? (get_str col row) 0)
-                (assert (eq? str1 16))
-                (assert (eq? str1 0)))
-            
-            (if (eq? (get_str col row #f) 0)
-                (assert (eq? str2 16))
-                (assert (eq? str2 0))))))
-    
-    ; (interpret structure)
-    (define (interpret structure)
-      (destruct structure
-                [(air col row str1 str2)
-                 (add_block_goal "ai" col row)
-                 (assert (eq? str1 0))
-                 (assert (eq? str2 0))]
-                
-                [(solid col row str1 str2)
-                 (add_block_goal "so" col row)
-                 (add_solid_asserts str1 str2 col row)]
-                
-                [(rs_block col row str1 str2)
-                 (add_block_goal "rb" col row)
-                 (assert (eq? str1 16))
-                 (assert (eq? str2 16))]
-                
-                [(rs_dust col row str1 str2)
-                 (add_block_goal "rs" col row)
-                 (add_rsdust_asserts str1 str2 col row)]
-                
-                [(torch_north col row str1 str2)
-                 (add_block_goal "tn" col row)
-                 (assert (not (eq? row (- nROWs 1))))
-                 (add_torch_asserts str1 str2 col (+ row 1))]
-                
-                [(torch_east col row str1 str2)
-                 (add_block_goal "te" col row)
-                 (assert (not (eq? col 0)))
-                 (add_torch_asserts str1 str2 (- col 1) row)]
-                
-                [(torch_south col row str1 str2)
-                 (add_block_goal "ts" col row)
-                 (assert (not (eq? row 0)))
-                 (add_torch_asserts str1 str2 col (- row 1))]
-                
-                [(torch_west col row str1 str2)
-                 (add_block_goal "tw" col row)
-                 (assert (not (eq? col (- nCOLs 1))))
-                 (add_torch_asserts str1 str2 (+ col 1) row)]
-                
-                [_ (raise (format "Invalid structure, which can not be interpreted: ~a" structure))]))
-    
-    ; block structures
-    (begin
-      (struct air (col row str1 str2))
-      (struct solid (col row str1 str2))
-      (struct rs_block (col row str1 str2))
-      (struct rs_dust (col row str1 str2))
-      (struct torch_north (col row str1 str2))
-      (struct torch_east (col row str1 str2))
-      (struct torch_south (col row str1 str2))
-      (struct torch_west (col row str1 str2)))
-    
-    (for ([row nROWs])
-      (for ([col nCOLs])        
-        (define block (get_block col row))
-        (define str1 (get_str col row))
-        (define str2 (get_str col row #f))
-        
-        (define is_block_symbolic (symbolic? block))
-        (define is_str1_symbolic (symbolic? str1))
-        (define is_str2_symbolic (symbolic? str2))
-        
-        (if (and is_block_symbolic is_str1_symbolic is_str2_symbolic)
-            (interpret (choose*
-                        (air col row str1 str2)
-                        (solid col row str1 str2)
-                        (rs_block col row str1 str2)
-                        (rs_dust col row str1 str2)
-                        (torch_north col row str1 str2)
-                        (torch_east col row str1 str2)
-                        (torch_south col row str1 str2)
-                        (torch_west col row str1 str2)))
-            
-            ; else
-            (begin
-              (when (or is_block_symbolic is_str1_symbolic is_str2_symbolic)
-                (raise (format "Invalid values at column '~a' and row '~a'. The values in all three worlds must either all be symbolic or concrete."
-                               col row))))))))
-  
   ; (nl)
   (define (nl) (display "\n"))
   
   ; (solve_world)
   (define (solve_world)
     
-    ; (get_model_block binding col row)
-    (define (get_model_block binding col row)
-      (define model_block (hash-ref binding (get_block col row) -1))
-      
-      (if (= model_block -1)
-          (get_block col row)
-          model_block))
+    ; (add_world_asserts)
+    (define (add_world_asserts)
     
-    ; (get_costs)
-    (define (get_costs)
-      (if (not USE_SPECIFIED_COSTS)
-          (apply + WORLD_REDSTONE)
+      ; (add_solid_asserts str1 str2 col row)
+      (define (add_solid_asserts str1 str2 col row)
+      
+        ; (add_to_nbs nbs col row is_north_or_south is_initial)
+        (define (add_to_nbs nbs col row is_north_or_south is_initial)
+        
+          ; (is_rb_or_rs_or_torch block)
+          (define (is_rb_or_rs_or_torch block)
+            (or
+             (eq? block (get_number "rb"))
+             (eq? block (get_number "rs"))
+             (is_torch? block)))
+        
+          (define block (get_block col row))
+        
+          (if (not (eq? block (get_number "rs")))
+              nbs
+            
+              ; else
+              (begin
+                (define col_offset (if is_north_or_south 1 0))
+                (define row_offset (if is_north_or_south 0 1))
+              
+                (define nb_one (get_block (+ col col_offset) (- row row_offset) #f))
+                (define nb_two (get_block (- col col_offset) (+ row row_offset) #f))
+              
+                (if (or
+                     (is_rb_or_rs_or_torch nb_one)
+                     (is_rb_or_rs_or_torch nb_two))
+                    nbs
+                    (append nbs (list (get_str col row is_initial)))))))
+      
+        (define nbs1 (list))
+        (define nbs2 (list))
+      
+        (when (not (eq? row 0)) ; North
+          (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t #t))
+          (set! nbs2 (add_to_nbs nbs2 col (- row 1) #t #f)))
+      
+        (when (not (eq? col (- nCOLs 1))) ; East
+          (set! nbs1 (add_to_nbs nbs1 (+ col 1) row #f #t))
+          (set! nbs2 (add_to_nbs nbs2 (+ col 1) row #f #f)))
+      
+        (when (not (eq? row (- nROWs 1))) ; South
+          (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t #t))
+          (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #t #f)))
+      
+        (when (not (eq? col 0)) ; West
+          (set! nbs1 (add_to_nbs nbs1 (- col 1) row #f #t))
+          (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f #f)))
+      
+        (assert (eq? str1 (apply max 0 nbs1)))
+        (assert (eq? str2 (apply max 0 nbs2))))
+    
+      ; (add_rsdust_asserts str1 str2 col row)
+      (define (add_rsdust_asserts str1 str2 col row)
+      
+        ; (add_to_nbs nbs col row is_initial)
+        (define (add_to_nbs nbs col row is_initial)
+          (if (eq? (get_block col row) (get_number "so"))
+              nbs
+              (append nbs (list (get_str col row is_initial)))))
+      
+        (define nbs1 (list))
+        (define nbs2 (list))
+      
+        (when (not (eq? row 0)) ; North
+          (set! nbs1 (add_to_nbs nbs1 col (- row 1) #t))
+          (set! nbs2 (add_to_nbs nbs2 col (- row 1) #f)))
+      
+        (when (not (eq? col (- nCOLs 1))) ; East
+          (set! nbs1 (add_to_nbs nbs1 (+ col 1) row #t))
+          (set! nbs2 (add_to_nbs nbs2 (+ col 1) row #f)))
+      
+        (when (not (eq? row (- nROWs 1))) ; South
+          (set! nbs1 (add_to_nbs nbs1 col (+ row 1) #t))
+          (set! nbs2 (add_to_nbs nbs2 col (+ row 1) #f)))
+      
+        (when (not (eq? col 0)) ; West
+          (set! nbs1 (add_to_nbs nbs1 (- col 1) row #t))
+          (set! nbs2 (add_to_nbs nbs2 (- col 1) row #f)))
+      
+        (assert (eq? str1 (- (apply max 1 nbs1) 1)))
+        (assert (eq? str2 (- (apply max 1 nbs2) 1))))
+    
+      ; (add_torch_asserts str1 str2 col row)
+      (define (add_torch_asserts str1 str2 col row)
+        (define nb (get_block col row))
+      
+        (assert (or
+                 (eq? nb (get_number "so"))
+                 (eq? nb (get_number "rb"))))
+      
+        (if (eq? nb (get_number "rb"))
+            (and
+             (assert (eq? str1 0))
+             (assert (eq? str2 0)))
           
-          ; else
-          (begin
-            (define costs 0)
+            ; else
+            (begin
+              (if (eq? (get_str col row) 0)
+                  (assert (eq? str1 16))
+                  (assert (eq? str1 0)))
             
-            (for ([col nCOLs])
-              (for ([row nROWs])
-                (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_block col row))))))
+              (if (eq? (get_str col row #f) 0)
+                  (assert (eq? str2 16))
+                  (assert (eq? str2 0))))))
+    
+      ; (interpret structure)
+      (define (interpret structure)
+        (destruct structure
+                  [(air col row str1 str2)
+                   (add_block_goal "ai" col row)
+                   (assert (eq? str1 0))
+                   (assert (eq? str2 0))]
+                
+                  [(solid col row str1 str2)
+                   (add_block_goal "so" col row)
+                   (add_solid_asserts str1 str2 col row)]
+                
+                  [(rs_block col row str1 str2)
+                   (add_block_goal "rb" col row)
+                   (assert (eq? str1 16))
+                   (assert (eq? str2 16))]
+                
+                  [(rs_dust col row str1 str2)
+                   (add_block_goal "rs" col row)
+                   (add_rsdust_asserts str1 str2 col row)]
+                
+                  [(torch_north col row str1 str2)
+                   (add_block_goal "tn" col row)
+                   (assert (not (eq? row (- nROWs 1))))
+                   (add_torch_asserts str1 str2 col (+ row 1))]
+                
+                  [(torch_east col row str1 str2)
+                   (add_block_goal "te" col row)
+                   (assert (not (eq? col 0)))
+                   (add_torch_asserts str1 str2 (- col 1) row)]
+                
+                  [(torch_south col row str1 str2)
+                   (add_block_goal "ts" col row)
+                   (assert (not (eq? row 0)))
+                   (add_torch_asserts str1 str2 col (- row 1))]
+                
+                  [(torch_west col row str1 str2)
+                   (add_block_goal "tw" col row)
+                   (assert (not (eq? col (- nCOLs 1))))
+                   (add_torch_asserts str1 str2 (+ col 1) row)]
+                
+                  [_ (raise (format "Invalid structure, which can not be interpreted: ~a" structure))]))
+    
+      ; block structures
+      (begin
+        (struct air (col row str1 str2))
+        (struct solid (col row str1 str2))
+        (struct rs_block (col row str1 str2))
+        (struct rs_dust (col row str1 str2))
+        (struct torch_north (col row str1 str2))
+        (struct torch_east (col row str1 str2))
+        (struct torch_south (col row str1 str2))
+        (struct torch_west (col row str1 str2)))
+    
+      (for ([row nROWs])
+        (for ([col nCOLs])        
+          (define block (get_block col row))
+          (define str1 (get_str col row))
+          (define str2 (get_str col row #f))
+        
+          (define is_block_symbolic (symbolic? block))
+          (define is_str1_symbolic (symbolic? str1))
+          (define is_str2_symbolic (symbolic? str2))
+        
+          (if (and is_block_symbolic is_str1_symbolic is_str2_symbolic)
+              (interpret (choose*
+                          (air col row str1 str2)
+                          (solid col row str1 str2)
+                          (rs_block col row str1 str2)
+                          (rs_dust col row str1 str2)
+                          (torch_north col row str1 str2)
+                          (torch_east col row str1 str2)
+                          (torch_south col row str1 str2)
+                          (torch_west col row str1 str2)))
             
-            costs)))
-    
-    ; (get_block_costs)
-    (define (get_block_costs)      
-      (define costs 0)
-      
-      (for ([col nCOLs])
-        (for ([row nROWs])          
-          (when (not (eq? (get_block col row) (get_number "ai")))
-            (set! costs (+ costs 1)))))
-      
-      costs)
-    
-    ; (get_model_str binding col row [is_initial #t])
-    (define (get_model_str binding col row [is_initial #t])
-      (define model_str (hash-ref binding (get_str col row is_initial) -1))
-      
-      (if (= model_str -1)
-          (get_str col row is_initial)
-          model_str))
+              ; else
+              (begin
+                (when (or is_block_symbolic is_str1_symbolic is_str2_symbolic)
+                  (raise (format "Invalid values at column '~a' and row '~a'. The values in all three worlds must either all be symbolic or concrete."
+                                 col row))))))))
     
     ; (get_name number)
     (define (get_name number)
@@ -437,9 +395,17 @@
       
       (list-ref BLOCKS number))
     
+    ; (get_model_str binding col row [is_initial #t])
+    (define (get_model_str binding col row [is_initial #t])
+      (define model_str (hash-ref binding (get_str col row is_initial) -1))
+      
+      (if (= model_str -1)
+          (get_str col row is_initial)
+          model_str))
+    
     ; (print_layers binding)
     (define (print_layers binding n_prints)
-      
+
       ; (get_fancy_name number str)
       (define (get_fancy_name number str)
         (when (or
@@ -551,17 +517,51 @@
               (when (not (eq? nth last_print)) (display " |  "))))
           
           (nl))))
-    
+
     ; (print_line length)
     (define (print_line length)
       (when (> length 0)
         (display (make-string length #\=)))
       (nl))
     
+    ; (get_model_block binding col row)
+    (define (get_model_block binding col row)
+      (define model_block (hash-ref binding (get_block col row) -1))
+      
+      (if (= model_block -1)
+          (get_block col row)
+          model_block))
+    
+    ; (get_costs)
+    (define (get_costs)
+      (if (not USE_SPECIFIED_COSTS)
+          (apply + WORLD_REDSTONE)
+          
+          ; else
+          (begin
+            (define costs 0)
+            
+            (for ([col nCOLs])
+              (for ([row nROWs])
+                (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_block col row))))))
+            
+            costs)))
+
     ; (round_down number)
     (define (round_down number)
       (inexact->exact (floor number)))
     
+    ; (get_block_costs)
+    (define (get_block_costs)      
+      (define costs 0)
+      
+      (for ([col nCOLs])
+        (for ([row nROWs])          
+          (when (not (eq? (get_block col row) (get_number "ai")))
+            (set! costs (+ costs 1)))))
+      
+      costs)
+
     ; (print_command binding x_offset y_offset z_offset)
     (define (print_command binding x_offset y_offset z_offset)
       
