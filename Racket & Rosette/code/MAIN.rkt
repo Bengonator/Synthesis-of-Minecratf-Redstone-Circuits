@@ -205,7 +205,8 @@
              (eq? block (get_number "rb"))
              (eq? block (get_number "rs"))
              (is_torch? block)))
-        
+
+          ; procedure add_to_nbs
           (define block (get_block col row))
         
           (if (not (eq? block (get_number "rs")))
@@ -224,7 +225,8 @@
                      (is_rb_or_rs_or_torch nb_two))
                     nbs
                     (append nbs (list (get_str col row is_initial)))))))
-      
+        
+        ; procedure add_solid_asserts
         (define nbs1 (list))
         (define nbs2 (list))
       
@@ -255,7 +257,8 @@
           (if (eq? (get_block col row) (get_number "so"))
               nbs
               (append nbs (list (get_str col row is_initial)))))
-      
+
+        ; procedure add_rsdust_asserts
         (define nbs1 (list))
         (define nbs2 (list))
       
@@ -354,7 +357,8 @@
         (struct torch_east (col row str1 str2))
         (struct torch_south (col row str1 str2))
         (struct torch_west (col row str1 str2)))
-    
+
+      ; procedure add_world_asserts
       (for ([row nROWs])
         (for ([col nCOLs])        
           (define block (get_block col row))
@@ -403,9 +407,6 @@
     ; (print_layers binding)
     (define (print_layers binding n_prints)
       
-      ; (nl)
-      (define (nl) (display "\n"))
-      
       ; (get_fancy_name number str)
       (define (get_fancy_name number str)
         (when (or
@@ -430,7 +431,8 @@
                (string-append " " (string (string-ref fancy_name 1))))]
           
           [else fancy_name]))
-      
+
+      ; procedure print_layers
       (when (> n_prints 0)
         
         (define max_prints (length PRINTED_LAYERS))
@@ -517,12 +519,15 @@
               (when (not (eq? nth last_print)) (display " |  "))))
           
           (nl))))
-
+    
     ; (print_line length)
     (define (print_line length)
       (when (> length 0)
         (display (make-string length #\=)))
       (nl))
+    
+    ; (nl)
+    (define (nl) (display "\n"))
     
     ; (get_model_block binding col row)
     (define (get_model_block binding col row)
@@ -573,6 +578,7 @@
                  (+ col x_offset) (- y_offset 2) (+ row z_offset) name)
          nwl))
       
+      ; procedure print_command
       (define tab "")
       (define nwl "")
       
@@ -635,7 +641,8 @@
       (when PRINT_CLEAR_COMMAND
         (display "Command to clear the blocks:\n")
         (display (string-append command_start commands_clear_blocks command_end))))
-    
+
+    ; procedure solve_world
     (define n_prints (- (length PRINTED_LAYERS) (length (filter false? PRINTED_LAYERS))))
     (define (colon_nl) (display (if (eq? n_prints 0) "\n" ":\n")))
     
