@@ -404,6 +404,9 @@
           (get_str col row is_initial)
           model_str))
     
+    ; (nl)
+    (define (nl) (display "\n"))
+    
     ; (print_layers binding)
     (define (print_layers binding n_prints)
       
@@ -525,9 +528,6 @@
       (when (> length 0)
         (display (make-string length #\=)))
       (nl))
-    
-    ; (nl)
-    (define (nl) (display "\n"))
     
     ; (get_model_block binding col row)
     (define (get_model_block binding col row)
