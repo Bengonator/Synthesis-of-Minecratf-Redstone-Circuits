@@ -101,7 +101,7 @@ Example 4: energy saving
 	
 	Goals:
 	(set_input 2 5 "rs" 0 15)
-	(add_off_on_torch_goal 2 2)
+	(add_on_off_torch_goal 2 2)
 	(add_off_on_torch_goal 0 0)
 	(add_off_on_torch_goal 4 0)
 	(add_off_on_torch_goal 0 4)
