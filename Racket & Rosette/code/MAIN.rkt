@@ -745,8 +745,7 @@
             (define last_unsat_blocks_bound -1)
             
             (define blocks_bound (real->double-flonum max_blocks_bound))
-            (set! exponent 0)
-            
+            (set! exponent 0)            
             (while (<= 0 blocks_bound max_blocks_bound)
                    (when (eq? 1 (- (floor last_sat_blocks_bound) (floor last_unsat_blocks_bound))) (break))
                    
