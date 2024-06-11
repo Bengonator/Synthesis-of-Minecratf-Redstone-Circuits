@@ -540,7 +540,7 @@
     ; (get_costs)
     (define (get_costs)
       (if (not USE_SPECIFIED_COSTS)
-          (apply + WORLD_REDSTONE)
+          (max (apply + WORLD_REDSTONE) (apply + WORLD_REDSTONE_2))
           
           ; else
           (begin
