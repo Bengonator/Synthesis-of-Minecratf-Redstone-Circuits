@@ -396,6 +396,14 @@
       
       (list-ref BLOCKS number))
     
+    ; (get_model_block binding col row)
+    (define (get_model_block binding col row)
+      (define model_block (hash-ref binding (get_block col row) -1))
+      
+      (if (= model_block -1)
+          (get_block col row)
+          model_block))
+    
     ; (get_model_str binding col row [is_initial #t])
     (define (get_model_str binding col row [is_initial #t])
       (define model_str (hash-ref binding (get_str col row is_initial) -1))
@@ -528,14 +536,6 @@
       (when (> length 0)
         (display (make-string length #\=)))
       (nl))
-    
-    ; (get_model_block binding col row)
-    (define (get_model_block binding col row)
-      (define model_block (hash-ref binding (get_block col row) -1))
-      
-      (if (= model_block -1)
-          (get_block col row)
-          model_block))
     
     ; (get_costs)
     (define (get_costs)
@@ -680,18 +680,18 @@
             (define last_sat_solution solution)
             
             (define max_cost_bound
-              (let ([costs_1 0] [costs_2 0])
+              (let ([costs 0] [costs_2 0])
                 (for ([col nCOLs])
                   (for ([row nROWs])
                     (if USE_SPECIFIED_COSTS
-                        (set! costs_2 (+ costs_2 (list-ref SPECIFIED_COSTS (get_model_block (model solution) col row))))
+                        (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_model_block (model solution) col row))))
 
                         ; else
                         (begin
-                          (set! costs_1 (+ costs_1 (get_model_str (model solution) col row)))
+                          (set! costs (+ costs (get_model_str (model solution) col row)))
                           (set! costs_2 (+ costs_2 (get_model_str (model solution) col row #f)))))))
                     
-                (max costs_1 costs_2)))
+                (max costs costs_2)))
             
             (define last_sat_cost_bound max_cost_bound)
             (define last_unsat_cost_bound -1)
