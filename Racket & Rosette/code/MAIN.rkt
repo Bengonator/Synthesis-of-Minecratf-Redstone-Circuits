@@ -680,27 +680,18 @@
             (define last_sat_solution solution)
             
             (define max_cost_bound
-              (if USE_SPECIFIED_COSTS
-                  (begin
-                    (define costs 0)
+              (let ([costs_1 0] [costs_2 0])
+                (for ([col nCOLs])
+                  (for ([row nROWs])
+                    (if USE_SPECIFIED_COSTS
+                        (set! costs_2 (+ costs_2 (list-ref SPECIFIED_COSTS (get_model_block (model solution) col row))))
+
+                        ; else
+                        (begin
+                          (set! costs_1 (+ costs_1 (get_model_str (model solution) col row)))
+                          (set! costs_2 (+ costs_2 (get_model_str (model solution) col row #f)))))))
                     
-                    (for ([col nCOLs])
-                      (for ([row nROWs])
-                        (set! costs (+ costs (list-ref SPECIFIED_COSTS (get_model_block (model solution) col row))))))
-                    
-                    costs)
-                  
-                  ; else
-                  (begin
-                    (define costs_1 0)
-                    (define costs_2 0)
-                    
-                    (for ([col nCOLs])
-                      (for ([row nROWs])
-                        (set! costs_1 (+ costs_1 (get_model_str (model solution) col row)))
-                        (set! costs_2 (+ costs_2 (get_model_str (model solution) col row #f)))))
-                    
-                    (max costs_1 costs_2))))
+                (max costs_1 costs_2)))
             
             (define last_sat_cost_bound max_cost_bound)
             (define last_unsat_cost_bound -1)
