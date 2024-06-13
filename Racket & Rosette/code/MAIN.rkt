@@ -740,7 +740,7 @@
               (display "Minimizing amount of non-air blocks:\n"))
             
             (set! last_sat_solution solution)
-            (define max_blocks_bound (* nCOLs nROWs))
+            (define max_blocks_bound LEN)
             (define last_sat_blocks_bound max_blocks_bound)
             (define last_unsat_blocks_bound -1)
             
@@ -813,7 +813,7 @@
       4)  ; torch west
     ) ; SPECIFIED_COSTS
 
-  (define PRINT_STEPS #t)
+  (define PRINT_STEPS #f)
   (define PRINTED_LAYERS
     '(#t   ; blocks
       #f   ; initial redstone
@@ -822,7 +822,7 @@
       #t)  ; step fancy
     ) ; PRINTED_LAYERS
 
-  (define PRINT_COMMAND #t)
+  (define PRINT_COMMAND #f)
   (define PRINT_CLEAR_COMMAND #f)
   
   (define xOFFSET 0)
