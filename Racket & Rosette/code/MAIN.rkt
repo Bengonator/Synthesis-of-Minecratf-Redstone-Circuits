@@ -744,7 +744,7 @@
             (define last_sat_blocks_bound max_blocks_bound)
             (define last_unsat_blocks_bound -1)
             
-            (define blocks_bound max_blocks_bound)
+            (define blocks_bound (/ max_blocks_bound 2 ))
             (set! exponent 0)
             (while (<= 0 blocks_bound max_blocks_bound)
                    (when (eq? 1 (- (floor last_sat_blocks_bound) (floor last_unsat_blocks_bound))) (break))
@@ -765,7 +765,7 @@
                      
                          (set! last_sat_solution solution)
                          (set! last_sat_blocks_bound blocks_bound)
-                         (set! blocks_bound (- blocks_bound (/ max_blocks_bound (expt 2 exponent)))))
+                         (set! blocks_bound (- blocks_bound (/ max_blocks_bound (expt 2 (+ 1 exponent))))))
                        
                        ; else
                        (begin
@@ -773,7 +773,7 @@
                            (display (format "\nStep ~a: UNSAT with blocks bound ~a\n" exponent blocks_bound)))
                          
                          (set! last_unsat_blocks_bound blocks_bound)
-                         (set! blocks_bound (+ blocks_bound (/ max_blocks_bound (expt 2 exponent)))))))
+                         (set! blocks_bound (+ blocks_bound (/ max_blocks_bound (expt 2 (+ 1 exponent))))))))
             
             (when PRINT_STEPS
               (print_line line_len)
