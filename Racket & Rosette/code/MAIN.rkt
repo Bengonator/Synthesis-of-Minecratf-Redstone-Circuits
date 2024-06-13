@@ -696,7 +696,7 @@
             (define last_sat_cost_bound max_cost_bound)
             (define last_unsat_cost_bound -1)
             
-            (define cost_bound (real->double-flonum max_cost_bound))
+            (define cost_bound (real->double-flonum (/ max_cost_bound 2)))
             (define exponent 0)
             (while (<= 0 cost_bound max_cost_bound)
                    (when (eq? 1 (- (floor last_sat_cost_bound) (floor last_unsat_cost_bound))) (break))
@@ -706,7 +706,7 @@
                    (set! exponent (+ exponent 1))
                    
                    (if (sat? solution)
-                       (begin                     
+                       (begin
                          (when PRINT_STEPS
                            (display (format "\nStep ~a: SAT with cost bound ~a" exponent cost_bound))
                            (colon_nl)
@@ -714,7 +714,7 @@
                          
                          (set! last_sat_solution solution)
                          (set! last_sat_cost_bound cost_bound)
-                         (set! cost_bound (- cost_bound (/ max_cost_bound (expt 2 exponent)))))
+                         (set! cost_bound (- cost_bound (/ max_cost_bound (expt 2 (+ 1 exponent))))))
                        
                        ; else
                        (begin
@@ -722,7 +722,7 @@
                            (display (format "\nStep ~a: UNSAT with cost bound ~a\n" exponent cost_bound)))
                          
                          (set! last_unsat_cost_bound cost_bound)
-                         (set! cost_bound (+ cost_bound (/ max_cost_bound (expt 2 exponent)))))))
+                         (set! cost_bound (+ cost_bound (/ max_cost_bound (expt 2 (+ 1 exponent))))))))
             
             (when PRINT_STEPS
               (print_line line_len)
@@ -813,7 +813,7 @@
       4)  ; torch west
     ) ; SPECIFIED_COSTS
 
-  (define PRINT_STEPS #f)
+  (define PRINT_STEPS #t)
   (define PRINTED_LAYERS
     '(#t   ; blocks
       #f   ; initial redstone
