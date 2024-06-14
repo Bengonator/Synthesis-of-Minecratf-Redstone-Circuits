@@ -392,7 +392,7 @@
              (< number 0)
              (>= number (length BLOCKS)))
         (raise (format "Invalid block number '~a'. Number must be between 0 and ~a."
-                       number ( - (length BLOCKS) 1))))
+                       number (- (length BLOCKS) 1))))
       
       (list-ref BLOCKS number))
     
@@ -424,7 +424,7 @@
                (< number 0)
                (>= number (length BLOCKS)))
           (raise (format "Invalid block number '~a'. Number must be between 0 and ~a."
-                         number ( - (length BLOCKS) 1))))
+                         number (- (length BLOCKS) 1))))
         
         (define name (get_name number))
         (define fancy_name (list-ref BLOCKS_FANCY number))
