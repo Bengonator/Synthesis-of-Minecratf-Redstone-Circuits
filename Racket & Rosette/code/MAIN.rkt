@@ -433,8 +433,8 @@
           [(eq? name "rs")
            (string-append " "
                           (if (eq? str 0)
-                              (string (string-ref fancy_name 1))
-                              (string (string-ref fancy_name 0))))]
+                              (string (string-ref fancy_name 0))
+                              (string (string-ref fancy_name 1))))]
           
           [(index-of (list "tn" "te" "ts" "tw") name)
            (if (eq? str 0)
@@ -836,7 +836,7 @@
 (begin
   
   (define BLOCKS       '("xx" "ai" "so" "rb" "rs" "tn" "te" "ts" "tw"))
-  (define BLOCKS_FANCY '("??" "  " " O" " X" "*." "!^" "!>" "!v" "!<"))
+  (define BLOCKS_FANCY '("??" "  " " O" " X" ".*" "!^" "!>" "!v" "!<"))
   
   (when (not (eq? (length SPECIFIED_COSTS) (length BLOCKS)))
     (raise (format
