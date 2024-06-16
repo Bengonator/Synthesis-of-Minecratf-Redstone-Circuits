@@ -69,7 +69,7 @@
     indexOrFalse)
   
   ; (get_block col row [throw_error #t])
-  (define (get_block col row [throw_error #t])    
+  (define (get_block col row [throw_error #t])
     (define index (get_index col row throw_error))
     
     (if (eq? index -1)
@@ -360,7 +360,7 @@
 
       ; procedure add_world_asserts
       (for ([row nROWs])
-        (for ([col nCOLs])        
+        (for ([col nCOLs])
           (define block (get_block col row))
           (define str1 (get_str col row))
           (define str2 (get_str col row #f))
@@ -445,7 +445,6 @@
 
       ; procedure print_layers
       (when (> n_prints 0)
-        
         (define max_prints (length PRINTED_LAYERS))
         (define last_print (last (indexes-of PRINTED_LAYERS #t)))
         
@@ -498,7 +497,7 @@
               ; cell value
               (begin
                 (for ([c nCOLs])
-                  (cond              
+                  (cond
                     [(eq? nth 0)
                      (display (get_name (get_model_block binding c r)))]
                     
@@ -557,11 +556,11 @@
       (inexact->exact (floor number)))
     
     ; (get_block_costs)
-    (define (get_block_costs)      
+    (define (get_block_costs)
       (define costs 0)
       
       (for ([col nCOLs])
-        (for ([row nROWs])          
+        (for ([row nROWs])
           (when (not (eq? (get_block col row) (get_number "ai")))
             (set! costs (+ costs 1)))))
       
@@ -625,10 +624,10 @@
                         [(eq? block "tw") "facing=west"])
                       (if (eq? str 0) ",lit=false]" "]")))])
             
-            (define new_set_block_command (new_block_command c r name_in_game))          
+            (define new_set_block_command (new_block_command c r name_in_game))
             (set! commands_set_blocks (string-append commands_set_blocks new_set_block_command))
             
-            (define new_clear_block_command (new_block_command c r "air"))         
+            (define new_clear_block_command (new_block_command c r "air"))
             (set! commands_clear_blocks (string-append commands_clear_blocks new_clear_block_command)))))
       
       (display "Copy command")
@@ -665,13 +664,13 @@
         (display "UNSAT\n\n")
         
         ; else
-        (begin          
+        (begin
           (display "SAT without any bounds")
           (colon_nl)
           (print_layers (model solution) n_prints)
           (nl)
           
-          ; minimizing cost power level 
+          ; minimizing cost power level
           (begin
             (when PRINT_STEPS
               (print_line line_len)
@@ -757,7 +756,7 @@
                    (set! exponent (+ exponent 1))
                    
                    (if (sat? solution)
-                       (begin                     
+                       (begin
                          (when PRINT_STEPS
                            (display (format "\nStep ~a: SAT with blocks bound ~a" exponent blocks_bound))
                            (colon_nl)
@@ -809,7 +808,7 @@
       2   ; redstone dust
       4   ; torch north
       4   ; torch east
-      4   ; torch south 
+      4   ; torch south
       4)  ; torch west
     ) ; SPECIFIED_COSTS
 
