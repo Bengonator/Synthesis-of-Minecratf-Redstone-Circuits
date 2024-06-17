@@ -31,8 +31,8 @@
 ; === FUNCTIONS ===
 (begin
   
-  ; (set_input col row name str1 str2)
-  (define (set_input col row name str1 str2)
+  ; (set_input name str1 str2 col row)
+  (define (set_input name str1 str2 col row )
     (set! WORLD_BLOCKS
           (list-set WORLD_BLOCKS (get_index col row) (get_number name)))
     
@@ -863,7 +863,7 @@
 
 ; === MAIN: add goals here ===
 
-; (set_input col row name str1 str2)
+; (set_input name str1 str2 col row)
 
 ; (add_block_goal name col[s] row[s])
 ; (add_str_goal operator str col[s] row[s] [is_initial])

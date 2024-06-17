@@ -37,7 +37,7 @@ Example 2: sluice
 	(define zOFFSET 0)
 	
 	Goals:
-	(set_input 1 0 "rs" 0 15)
+	(set_input "rs" 0 15 1 0)
 	(add_on_off_torch_goal 0 5)
 	(add_off_on_torch_goal 0 8)
 	
@@ -70,7 +70,7 @@ Example 3: two entrances
 	(define zOFFSET 0)
 	
 	Goals:
-	(set_input 2 0 "rs" 0 15)
+	(set_input "rs" 0 15 2 0)
 	(add_off_on_torch_goal 0 5)
 	(add_on_off_torch_goal 2 5)
 	
@@ -100,7 +100,7 @@ Example 4: energy saving
 	(define zOFFSET 1)
 	
 	Goals:
-	(set_input 2 5 "rs" 0 15)
+	(set_input "rs" 0 15 2 5)
 	(add_on_off_torch_goal 2 2)
 	(add_off_on_torch_goal 0 0)
 	(add_off_on_torch_goal 4 0)
@@ -136,7 +136,7 @@ Example 5: expensive redstone
 	(define zOFFSET 3)
 	
 	Goals:
-	(set_input 0 0 "rs" 0 15)
+	(set_input "rs" 0 15 0 0)
 	(add_str_goal = 0 0 11)
 	(add_str_goal > 0 0 11 #f)
 	
