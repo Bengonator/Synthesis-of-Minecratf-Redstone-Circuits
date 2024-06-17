@@ -33,6 +33,15 @@
   
   ; (set_input name str1 str2 col row)
   (define (set_input name str1 str2 col row )
+    
+    ; (not_in_bounds str)
+    (define (not_in_bounds str)
+      (not (<= 0 str 16)))
+    
+    ; procedure set_input
+    (when (or (not_in_bounds str1) (not_in_bounds str2))
+      (raise (format "Both input strengts must be between 0 and 16, but the are ~a and ~a." str1 str2)))
+    
     (set! WORLD_BLOCKS
           (list-set WORLD_BLOCKS (get_index col row) (get_number name)))
     
