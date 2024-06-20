@@ -587,12 +587,8 @@
          nwl))
       
       ; procedure print_command
-      (define tab "")
-      (define nwl "")
-      
-      (when PRETTIFY_COMMANDS
-        (set! tab "\t")
-        (set! nwl "\n"))
+      (define tab (if PRETTIFY_COMMANDS "\t" ""))
+      (define nwl (if PRETTIFY_COMMANDS "\n" ""))
       
       (define command_start (string-append
                              "/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[" nwl
