@@ -615,7 +615,7 @@
           (define block (get_name (get_model_block binding c r)))
           (define str (get_model_str binding c r))
           
-          (when (not (or (eq? block "ai") (eq? block "oi")))
+          (when (not (eq? block "ai"))
             (define name_in_game "")
             
             (cond
