@@ -748,7 +748,6 @@
               (print_line line_len)
               (display "Minimizing amount of non-air blocks:\n"))
             
-            (set! last_sat_solution solution)
             (define max_blocks_bound LEN)
             (define last_sat_blocks_bound max_blocks_bound)
             (define last_unsat_blocks_bound -1)
