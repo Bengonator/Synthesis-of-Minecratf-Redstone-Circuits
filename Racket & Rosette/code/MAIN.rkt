@@ -644,7 +644,11 @@
       
       (when PRINT_CLEAR_COMMAND
         (display "Command to clear the blocks:\n")
-        (display (string-append command_start commands_clear_blocks command_end))))
+        (display (string-append command_start commands_clear_blocks command_end)))
+      
+      (when (< 32500 (string-length (string-append command_start commands_set_blocks command_end)))
+        (display "ATTENTION: The command will be too long for the minecraft command block!\n")
+        (display "Manual splitting has to be done.\n\n")))
 
     ; procedure solve_world
     (define n_prints (- (length PRINTED_LAYERS) (length (filter false? PRINTED_LAYERS))))
