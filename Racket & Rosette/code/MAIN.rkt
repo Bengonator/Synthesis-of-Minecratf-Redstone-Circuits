@@ -621,13 +621,14 @@
               [(is_torch? (get_number block))
                (set! name_in_game
                      (string-append
-                      "redstone_wall_torch["
+                      "redstone_wall_torch[facing="
                       (cond
-                        [(eq? block "tn") "facing=north"]
-                        [(eq? block "te") "facing=east"]
-                        [(eq? block "ts") "facing=south"]
-                        [(eq? block "tw") "facing=west"])
-                      (if (eq? str 0) ",lit=false]" "]")))])
+                        [(eq? block "tn") "north"]
+                        [(eq? block "te") "east"]
+                        [(eq? block "ts") "south"]
+                        [(eq? block "tw") "west"])
+                      (when (eq? str 0) ",lit=false")
+                      "]"))])
             
             (define new_set_block_command (new_block_command c r name_in_game))
             (set! commands_set_blocks (string-append commands_set_blocks new_set_block_command))
