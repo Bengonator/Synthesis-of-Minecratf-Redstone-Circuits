@@ -75,14 +75,14 @@ Example 3: two entrances
 	(add_on_off_torch_goal 2 5)
 	
 	Output:
-	IF |  0  1  2  |  SF |  0  1  2 
-	-------------  |  -------------
-	 0 |        .  |   0 |        * 
-	 1 |  O  .  .  |   1 |  O  *  * 
-	 2 |  v     .  |   2 | !v     * 
-	 3 |  *     .  |   3 |  .     * 
-	 4 |  O     O  |   4 |  O     O 
-	 5 | !v     v  |   5 |  v    !v 
+	BL |  0  1  2  |  IR |  0  1  2  |  IF |  0  1  2  |  SR |  0  1  2  |  SF |  0  1  2
+	-------------  |  -------------  |  -------------  |  -------------  |  -------------
+	 0 | ai ai rs  |   0 |  0  0  0  |   0 |        .  |   0 |  0  0 15  |   0 |        *
+	 1 | so rs rs  |   1 |  0  0  0  |   1 |  O  .  .  |   1 | 13 13 14  |   1 |  O  *  *
+	 2 | ts ai rs  |   2 | 16  0  0  |   2 |  v     .  |   2 |  0  0 13  |   2 | !v     *
+	 3 | rs ai rs  |   3 | 15  0  0  |   3 |  *     .  |   3 |  0  0 12  |   3 |  .     *
+	 4 | so ai so  |   4 | 15  0  0  |   4 |  O     O  |   4 |  0  0 12  |   4 |  O     O
+	 5 | ts ai ts  |   5 |  0  0 16  |   5 | !v     v  |   5 | 16  0  0  |   5 |  v    !v 
 	
 	Set:
 	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~3 ~-4 ~0 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~1 stone'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~1 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~2 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~5 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
@@ -108,15 +108,15 @@ Example 4: energy saving
 	(add_off_on_torch_goal 4 4)
 	
 	Output:
-	BL |  0  1  2  3  4  |  IF |  0  1  2  3  4  |  SF |  0  1  2  3  4 
-	-------------------  |  -------------------  |  -------------------
-	 0 | tw so ai so te  |   0 | !<  O     O !>  |   0 |  <  O     O  > 
-	 1 | ai rs ai rs ai  |   1 |     *     *     |   1 |     .     .    
-	 2 | ai rs tn rs ai  |   2 |     *  ^  *     |   2 |     . !^  .    
-	 3 | ai rs so rs ai  |   3 |     *  O  *     |   3 |     .  O  .    
-	 4 | tw so rs so te  |   4 | !<  O  .  O !>  |   4 |  <  O  *  O  > 
-	 5 | ai ai rs ai ai  |   5 |        .        |   5 |        *       
-	
+	BL |  0  1  2  3  4  |  IR |  0  1  2  3  4  |  IF |  0  1  2  3  4  |  SR |  0  1  2  3  4  |  SF |  0  1  2  3  4
+	-------------------  |  -------------------  |  -------------------  |  -------------------  |  -------------------
+	 0 | tw so ai so te  |   0 |  0 14  0 14  0  |   0 | !<  O     O !>  |   0 | 16  0  0  0 16  |   0 |  <  O     O  >
+	 1 | ai rs ai rs ai  |   1 |  0 14  0 14  0  |   1 |     *     *     |   1 |  0  0  0  0  0  |   1 |     .     .   
+	 2 | ai rs tn rs ai  |   2 |  0 15 16 15  0  |   2 |     *  ^  *     |   2 |  0  0  0  0  0  |   2 |     . !^  .   
+	 3 | ai rs so rs ai  |   3 |  0 14  0 14  0  |   3 |     *  O  *     |   3 |  0  0 14  0  0  |   3 |     .  O  .   
+	 4 | tw so rs so te  |   4 |  0 14  0 14  0  |   4 | !<  O  .  O !>  |   4 | 16  0 14  0 16  |   4 |  <  O  *  O  >
+	 5 | ai ai rs ai ai  |   5 |  0  0  0  0  0  |   5 |        .        |   5 |  0  0 15  0  0  |   5 |        *      
+
 	Set:
 	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~1 ~-4 ~1 redstone_wall_torch[facing=west,lit=false]'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~1 stone'},{id:command_block_minecart,Command:'setblock ~4 ~-4 ~1 stone'},{id:command_block_minecart,Command:'setblock ~5 ~-4 ~1 redstone_wall_torch[facing=east,lit=false]'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~4 ~-4 ~2 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~3 redstone_wall_torch[facing=north]'},{id:command_block_minecart,Command:'setblock ~4 ~-4 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~4 redstone_wire'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~4 stone'},{id:command_block_minecart,Command:'setblock ~4 ~-4 ~4 redstone_wire'},{id:command_block_minecart,Command:'setblock ~1 ~-4 ~5 redstone_wall_torch[facing=west,lit=false]'},{id:command_block_minecart,Command:'setblock ~2 ~-4 ~5 stone'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~5 redstone_wire'},{id:command_block_minecart,Command:'setblock ~4 ~-4 ~5 stone'},{id:command_block_minecart,Command:'setblock ~5 ~-4 ~5 redstone_wall_torch[facing=east,lit=false]'},{id:command_block_minecart,Command:'setblock ~3 ~-4 ~6 redstone_wire'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
 	
@@ -125,8 +125,8 @@ Example 4: energy saving
 
 Example 5: expensive redstone
 	
-	Change costs of redstone from 2 to 9.
-	And set USE_SPECIFIED_COSTS to true.
+	Set USE_SPECIFIED_COSTS to true.
+	Change costs of redstone dust from 2 to 9.
 	
 	Settings:
 	(define nCOLs 1)
@@ -141,41 +141,40 @@ Example 5: expensive redstone
 	(add_str_goal > 0 0 11 #f)
 	
 	Output normal:
-	BL |  0  |  IF |  0  |  SF |  0 
-	-------  |  -------  |  -------
-	 0 | rs  |   0 |  .  |   0 |  * 
-	 1 | rs  |   1 |  .  |   1 |  * 
-	 2 | rs  |   2 |  .  |   2 |  * 
-	 3 | rs  |   3 |  .  |   3 |  * 
-	 4 | rs  |   4 |  .  |   4 |  * 
-	 5 | rs  |   5 |  .  |   5 |  * 
-	 6 | rs  |   6 |  .  |   6 |  * 
-	 7 | rs  |   7 |  .  |   7 |  * 
-	 8 | rs  |   8 |  .  |   8 |  * 
-	 9 | rs  |   9 |  .  |   9 |  * 
-	10 | rs  |  10 |  .  |  10 |  * 
-	11 | so  |  11 |  O  |  11 |  O 
+	-------  |  -------  |  -------  |  -------  |  -------
+	 0 | rs  |   0 |  0  |   0 |  .  |   0 | 15  |   0 |  *
+	 1 | rs  |   1 |  0  |   1 |  .  |   1 | 14  |   1 |  *
+	 2 | rs  |   2 |  0  |   2 |  .  |   2 | 13  |   2 |  *
+	 3 | rs  |   3 |  0  |   3 |  .  |   3 | 12  |   3 |  *
+	 4 | rs  |   4 |  0  |   4 |  .  |   4 | 11  |   4 |  *
+	 5 | rs  |   5 |  0  |   5 |  .  |   5 | 10  |   5 |  *
+	 6 | rs  |   6 |  0  |   6 |  .  |   6 |  9  |   6 |  *
+	 7 | rs  |   7 |  0  |   7 |  .  |   7 |  8  |   7 |  *
+	 8 | rs  |   8 |  0  |   8 |  .  |   8 |  7  |   8 |  *
+	 9 | rs  |   9 |  0  |   9 |  .  |   9 |  6  |   9 |  *
+	10 | rs  |  10 |  0  |  10 |  .  |  10 |  5  |  10 |  *
+	11 | so  |  11 |  0  |  11 |  O  |  11 |  5  |  11 |  O
 	
-	Output cheap:
-	BL |  0  |  IF |  0  |  SF |  0 
-	-------  |  -------  |  -------
-	 0 | rs  |   0 |  .  |   0 |  * 
-	 1 | so  |   1 |  O  |   1 |  O 
-	 2 | ts  |   2 |  v  |   2 | !v 
-	 3 | rs  |   3 |  *  |   3 |  . 
-	 4 | so  |   4 |  O  |   4 |  O 
-	 5 | ts  |   5 | !v  |   5 |  v 
-	 6 | rs  |   6 |  .  |   6 |  * 
-	 7 | so  |   7 |  O  |   7 |  O 
-	 8 | ts  |   8 |  v  |   8 | !v 
-	 9 | rs  |   9 |  *  |   9 |  . 
-	10 | so  |  10 |  O  |  10 |  O 
-	11 | ts  |  11 | !v  |  11 |  v 
+	Output expensive with dust:
+	BL |  0  |  IR |  0  |  IF |  0  |  SR |  0  |  SF |  0
+	-------  |  -------  |  -------  |  -------  |  -------
+	 0 | rs  |   0 |  0  |   0 |  .  |   0 | 15  |   0 |  *
+	 1 | so  |   1 |  0  |   1 |  O  |   1 | 15  |   1 |  O
+	 2 | ts  |   2 | 16  |   2 |  v  |   2 |  0  |   2 | !v
+	 3 | rs  |   3 | 15  |   3 |  *  |   3 |  0  |   3 |  .
+	 4 | so  |   4 | 15  |   4 |  O  |   4 |  0  |   4 |  O
+	 5 | ts  |   5 |  0  |   5 | !v  |   5 | 16  |   5 |  v
+	 6 | rs  |   6 |  0  |   6 |  .  |   6 | 15  |   6 |  *
+	 7 | so  |   7 |  0  |   7 |  O  |   7 | 15  |   7 |  O
+	 8 | ts  |   8 | 16  |   8 |  v  |   8 |  0  |   8 | !v
+	 9 | rs  |   9 | 15  |   9 |  *  |   9 |  0  |   9 |  .
+	10 | so  |  10 | 15  |  10 |  O  |  10 |  0  |  10 |  O
+	11 | ts  |  11 |  0  |  11 | !v  |  11 | 16  |  11 |  v
 	
 	Set normal:
 	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~0 ~-2 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~4 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~5 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~6 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~7 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~8 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~9 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~10 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~11 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~12 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~13 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~14 stone'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
 	
-	Set cheap:
+	Set expensive:
 	/summon falling_block ~ ~1 ~ {BlockState:{Name:redstone_block},Passengers:[{id:armor_stand,Health:0,Passengers:[{id:falling_block,BlockState:{Name:activator_rail},Passengers:[{id:command_block_minecart,Command:'setblock ~0 ~-2 ~3 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~4 stone'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~5 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~6 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~7 stone'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~8 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~9 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~10 stone'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~11 redstone_wall_torch[facing=south]'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~12 redstone_wire'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~13 stone'},{id:command_block_minecart,Command:'setblock ~0 ~-2 ~14 redstone_wall_torch[facing=south,lit=false]'},{id:command_block_minecart,Command:'summon falling_block ~ ~-1.5 ~ {BlockState:{Name:command_block}}'},{id:command_block_minecart,Command:'setblock ~ ~1 ~ command_block{auto:1,Command:"fill ~ ~ ~ ~ ~-3 ~ air"}'},{id:command_block_minecart,Command:'kill @e[type=command_block_minecart,distance=..1]'}]}]}]}
 	
 	Clear:

@@ -805,7 +805,7 @@
 (begin
   
   (define nCOLs 2)
-  (define nROWs 2)
+  (define nROWs 9)
   
   (define USE_SPECIFIED_COSTS #f)
   (define SPECIFIED_COSTS
@@ -823,14 +823,14 @@
   (define PRINT_STEPS #f)
   (define PRINTED_LAYERS
     '(#t   ; blocks
-      #f   ; initial redstone
+      #t   ; initial redstone
       #t   ; initial fancy
-      #f   ; step redstone
+      #t   ; step redstone
       #t)  ; step fancy
     ) ; PRINTED_LAYERS
 
-  (define PRINT_COMMAND #f)
-  (define PRINT_CLEAR_COMMAND #f)
+  (define PRINT_COMMAND #t)
+  (define PRINT_CLEAR_COMMAND #t)
   
   (define xOFFSET 0)
   (define yOFFSET 0)
@@ -886,6 +886,8 @@
 ; (add_off_on_torch_or_solid_goal col row)
 ; (add_on_off_torch_or_solid_goal col row)
 
-(add_block_goal "rb" '(0 1) 0)
+(set_input "rs" 0 15 1 0)
+(add_on_off_torch_goal 0 5)
+(add_off_on_torch_goal 0 8)
 
 (solve_world)
