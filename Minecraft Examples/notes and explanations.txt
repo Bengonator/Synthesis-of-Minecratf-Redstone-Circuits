@@ -140,7 +140,7 @@ Example 5: expensive redstone
 	(add_str_goal = 0 0 11)
 	(add_str_goal > 0 0 11 #f)
 	
-	Output normal:
+	Output with cheap redstone dust:
 	-------  |  -------  |  -------  |  -------  |  -------
 	 0 | rs  |   0 |  0  |   0 |  .  |   0 | 15  |   0 |  *
 	 1 | rs  |   1 |  0  |   1 |  .  |   1 | 14  |   1 |  *
@@ -155,7 +155,7 @@ Example 5: expensive redstone
 	10 | rs  |  10 |  0  |  10 |  .  |  10 |  5  |  10 |  *
 	11 | so  |  11 |  0  |  11 |  O  |  11 |  5  |  11 |  O
 	
-	Output expensive with dust:
+	Output with expensive redstone dust:
 	BL |  0  |  IR |  0  |  IF |  0  |  SR |  0  |  SF |  0
 	-------  |  -------  |  -------  |  -------  |  -------
 	 0 | rs  |   0 |  0  |   0 |  .  |   0 | 15  |   0 |  *
