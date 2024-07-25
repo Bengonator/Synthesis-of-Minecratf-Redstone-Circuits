@@ -617,7 +617,7 @@
             (cond
               [(eq? block "so") (set! name_in_game "stone")]
               [(eq? block "rb") (set! name_in_game "redstone_block")]
-              [(eq? block "rs") (set! name_in_game "redstone_wire")]
+              [(eq? block "rs") (set! name_in_game "redstone_wire[west=up")]
               [(is_torch? (get_number block))
                (set! name_in_game
                      (string-append
